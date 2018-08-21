@@ -14,6 +14,7 @@ const app = {};
 
 // Variables
 app.apiURL = "https://deckofcardsapi.com/api/deck/";
+app.promise = [];
 
 
 // Collect user input
@@ -23,8 +24,9 @@ app.collectInfo = function () {
 
 
 // Make AJAX request with user inputted data
+
 app.ajaxRequest = function (urlEnding) {
-    app.getInfo = $.ajax({
+    return $.ajax({
         url: app.apiURL + urlEnding,
         method: "Get",
         dataType: "JSON",
@@ -35,27 +37,38 @@ app.ajaxRequest = function (urlEnding) {
 
 app.newDeck = function() {
     const urlEnding = "new/shuffle/?deck_count=1";
-    app.ajaxRequest(urlEnding);
-    app.getInfo.then((res)=>{
-        console.log(res); 
-    });   
+    app.promise.push(app.ajaxRequest(urlEnding));
 }
 
 // Dealing Cards
 
-app.dealCards = function (){
-
+app.dealCards = function (numberOfCards){
+    $.when(...app.promise)
+        .then((res) => {
+            app.deckID = res.deck_id 
+            const urlEnding = `${app.deckID}/draw/?count=${numberOfCards}`;          
+            const promise = (app.ajaxRequest(urlEnding));          
+            promise.then((res) => {
+                app.playerOneHand = res.cards  
+                app.displayInfo();       
+            });
+        })   
 }
+
 
 // Display data on the page
 app.displayInfo = function () {
-
+    app.playerOneHand.forEach((card)=>{
+        const cardImage = $("<img>").attr("src", card.image);
+        $('.userHand').append(cardImage);
+    });
 }
 
 // Start app
 app.init = function () {
     // app.getInfo();
     app.newDeck();
+    app.dealCards(8);
 }
 
 $(function () {

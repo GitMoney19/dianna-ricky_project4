@@ -1,0 +1,18 @@
+@import "partials/setup";
+@import "partials/utils";
+@import "partials/typography";
+
+body {
+    background-color: green;
+}
+.screen {
+    border: 1px solid #000;
+    height: 30vh;
+    width: 100%;
+    display: flex;
+}
+
+img {
+    max-width: 100%;
+    flex: 0 1 auto;
+}
