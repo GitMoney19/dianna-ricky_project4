@@ -34,41 +34,74 @@ app.ajaxRequest = function (urlEnding) {
 }
 
 // New Deck
-
-app.newDeck = function() {
+app.newDeck = function () {
     const urlEnding = "new/shuffle/?deck_count=1";
     app.promise.push(app.ajaxRequest(urlEnding));
 }
 
 // Dealing Cards
-
-app.dealCards = function (numberOfCards){
+app.dealCards = function (numberOfCards) {
     $.when(...app.promise)
         .then((res) => {
-            app.deckID = res.deck_id 
-            const urlEnding = `${app.deckID}/draw/?count=${numberOfCards}`;          
-            const promise = (app.ajaxRequest(urlEnding));          
+            app.deckID = res.deck_id
+
+            const urlEnding = `${app.deckID}/draw/?count=${numberOfCards}`;
+            const promise = (app.ajaxRequest(urlEnding));
+
             promise.then((res) => {
-                app.playerOneHand = res.cards  
-                app.displayInfo();       
+                app.dealtCards = res.cards;
+                app.cardsForPile = app.dealtCards; // Creating new mutable property
+
+                app.addToPile("user", 8);
+                app.addToPile("computer", 8);
             });
-        })   
+        })
 }
 
+// Add to pile
+app.addToPile = function (pileName, numberOfCards) {
+    // Following the below url format for adding to piles
+    // https://deckofcardsapi.com/api/deck/<<deck_id>>/pile/<<pile_name>>/add/?cards=AS,2S
+
+    // Declaring empty arrays to hold the card object and codes
+    let cardArray = [];
+    let cardCodes = [];
+
+    // Pushing the card object and card codes to array 
+    // from first card up to the number of cards to be added to pile
+    for (let i = 0; i < numberOfCards; i++) {
+        cardArray.push(app.cardsForPile[i]);
+        cardCodes.push(app.cardsForPile[i].code);
+    }
+
+    // Removing the cards which were added to pile from array
+    app.cardsForPile.splice(0, 8);
+
+    // Joining elements in the array to get desired format
+    let cardsAdded = cardCodes.join(",");  // using "," as a separator
+
+    // Putting it together to get desired url format
+    const urlEnding = `${app.deckID}/pile/${pileName}/add/?cards=${cardsAdded}`;
+
+    // Updating piles on api side
+    app.ajaxRequest(urlEnding);
+
+    // Displaying the hand on screen
+    app.displayInfo(cardArray, `.${pileName}Hand`);
+}
 
 // Display data on the page
-app.displayInfo = function () {
-    app.playerOneHand.forEach((card)=>{
+app.displayInfo = function (dealtCards, hand) {
+    dealtCards.forEach((card) => {
         const cardImage = $("<img>").attr("src", card.image);
-        $('.userHand').append(cardImage);
+        $(hand).append(cardImage);
     });
 }
 
 // Start app
 app.init = function () {
-    // app.getInfo();
     app.newDeck();
-    app.dealCards(8);
+    app.dealCards(16);
 }
 
 $(function () {
