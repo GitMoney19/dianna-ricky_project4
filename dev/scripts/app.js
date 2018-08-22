@@ -15,12 +15,9 @@ const app = {};
 // Variables
 app.apiURL = "https://deckofcardsapi.com/api/deck/";
 app.promise = [];
+app.garbageHand = [];
 
 
-// Collect user input
-app.collectInfo = function () {
-
-}
 
 
 // Make AJAX request with user inputted data
@@ -54,15 +51,27 @@ app.dealCards = function (numberOfCards) {
 
                 app.addToPile("user", 8);
                 app.addToPile("computer", 8);
+                app.addToPile("garbage", 1)
             });
         })
+}
+
+
+app.decidePile = function (pileName, hand){
+    if (pileName === "user") {
+        app.userHand = hand;
+    } else if (pileName === "computer") {
+        app.computerHand = hand;
+    } else if (pileName === "garbage") {
+        app.garbageHand.push(hand[0]);
+    }
 }
 
 // Add to pile
 app.addToPile = function (pileName, numberOfCards) {
     // Following the below url format for adding to piles
     // https://deckofcardsapi.com/api/deck/<<deck_id>>/pile/<<pile_name>>/add/?cards=AS,2S
-
+    
     // Declaring empty arrays to hold the card object and codes
     let cardArray = [];
     let cardCodes = [];
@@ -75,7 +84,7 @@ app.addToPile = function (pileName, numberOfCards) {
     }
 
     // Removing the cards which were added to pile from array
-    app.cardsForPile.splice(0, 8);
+    app.cardsForPile.splice(0, numberOfCards);
 
     // Joining elements in the array to get desired format
     let cardsAdded = cardCodes.join(",");  // using "," as a separator
@@ -87,23 +96,103 @@ app.addToPile = function (pileName, numberOfCards) {
     app.ajaxRequest(urlEnding);
 
     // Displaying the hand on screen
-    app.displayInfo(cardArray, `.${pileName}Hand`);
+    app.displayHands(cardArray, `.${pileName}Hand`);
+
+    // Saving value and suit of garbage pile top card
+    app.decidePile(pileName, cardArray);
+
 }
 
+// Once player chooses card, remove from user pile/array, add to garbage pile/array
+
 // Display data on the page
-app.displayInfo = function (dealtCards, hand) {
-    dealtCards.forEach((card) => {
+
+app.displayHands = function (dealtCards, hand) {
+    dealtCards.forEach((card, i) => {
+        const cardImageDiv = $("<div>")
+            .addClass(`cardContainer card${i}`)
+            // .css("transform", "rotate(45deg)")
+            .attr({
+                "data-value": card.value, 
+                "data-suit": card.suit,
+                "data-code": card.code});
         const cardImage = $("<img>").attr("src", card.image);
-        $(hand).append(cardImage);
+        cardImageDiv.append(cardImage);
+        $(hand).append(cardImageDiv);
     });
+    app.handSpread();
+}
+
+// Collect user input
+app.events = function () {
+    app.userTurn();
+}
+
+app.userTurn = function () {
+    $('.userHand').on('click', '.cardContainer', function () {
+        const cardValue = $(this).attr("data-value");
+        const cardSuit = $(this).attr("data-suit");
+        const cardCode = $(this).attr("data-code");
+        app.checkRules(cardValue, cardSuit, cardCode);
+    })
+}
+
+app.checkRules = function(value, suit, code) {
+    const currentGarbageIndex = app.garbageHand.length - 1;
+    console.log(`current`, currentGarbageIndex);
+    console.log(app.garbageHand);
+    
+    
+    // Check user selection against garbage pile card - if suit is the same OR same value OR value = 8
+    if (value == app.garbageHand[currentGarbageIndex].value || 
+        suit == app.garbageHand[currentGarbageIndex].suit ||
+        value == 8 ) {
+        console.log(`HELL YEA`);
+        app.userHand.forEach((card) =>{
+            if (card.code === code) {
+                app.cardsForPile.push(card);
+            }
+        })
+        app.addToPile("garbage", 1);
+
+    } 
+    // console.log(value, suit);
+    
+    // Jack skips next players turn
+    // Two cards - pick up two, can be cumulative
+    // Queens of Spades - pick up 5, can be cumulative
+}
+
+app.startGame = function () {
+    app.newDeck();
+    app.dealCards(17);
 }
 
 // Start app
 app.init = function () {
-    app.newDeck();
-    app.dealCards(16);
+    app.startGame();
+    app.events();
 }
 
 $(function () {
     app.init();
 });
+
+//Styling + Animations
+
+app.handSpread = function (){
+    let degrees = 0;
+    let shiftX = 120;
+    let shiftY = 0;
+    for (let i = 0; i < 8; i++) {
+        $(`.card${i}`)
+            .css ({
+                "transform": `rotate(${degrees}deg)`,
+                "left": shiftX,
+                "top": shiftY           
+            });
+        degrees += 6;
+        shiftX += 10;
+        shiftY += 15;
+    }
+}

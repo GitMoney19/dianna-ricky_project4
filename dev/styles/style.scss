@@ -4,12 +4,26 @@
 
 body {
     background-color: green;
+    display: flex;
+    flex-direction: column;
 }
 .screen {
     border: 1px solid #000;
     height: 30vh;
     width: 100%;
     display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.deck, .garbageHand {
+    display: flex;
+    justify-content: center;
+}
+
+.cardContainer {
+    width: 60%;
+    position: absolute;
 }
 
 img {
