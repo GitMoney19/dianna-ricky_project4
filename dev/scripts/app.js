@@ -55,12 +55,13 @@ app.dealCards = function (numberOfCards){
         })   
 }
 
-
+// look up how to target the img object that hasn't been made yet to affix new class
 // Display data on the page
 app.displayInfo = function () {
     app.playerOneHand.forEach((card)=>{
         const cardImage = $("<img>").attr("src", card.image);
-        $('.userHand').append(cardImage);
+        $('.userHand').find(img).addClass('rest').append(cardImage);
+        
     });
 }
 
