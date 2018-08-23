@@ -14,7 +14,7 @@ body {
 }
 .screen {
     // border: 1px solid #000;
-    height: 30vh;
+    // height: 30vh;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -25,9 +25,9 @@ body {
     display: flex;
     justify-content: center;
 }
-.computerHand, .userHand {
-    // transform: rotate(-30deg);
-}
+// .computerHand, .userHand {
+//     // transform: rotate(-30deg);
+// }
 
 .cardContainer {
     width: 100px;
@@ -44,12 +44,12 @@ img {
 }
 
 .pageOverlay {
-    background: white;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    background: rgba(#1d1d1d, #1d1d1d, #1d1d1d, 0.4);
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
 }
 
 .hidden {
