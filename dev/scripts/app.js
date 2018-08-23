@@ -18,8 +18,6 @@ app.promise = [];
 app.garbageHand = [];
 
 
-
-
 // Make AJAX request with user inputted data
 
 app.ajaxRequest = function (urlEnding) {
@@ -120,6 +118,7 @@ app.displayHands = function (dealtCards, hand) {
         cardImageDiv.append(cardImage);
         $(hand).append(cardImageDiv);
     });
+    // Styling for hands
     app.handSpread();
 }
 
@@ -133,17 +132,33 @@ app.userTurn = function () {
         const cardValue = $(this).attr("data-value");
         const cardSuit = $(this).attr("data-suit");
         const cardCode = $(this).attr("data-code");
+        // app.garbageCardCheck();
         app.checkRules(cardValue, cardSuit, cardCode);
     })
 }
+
+// Computer turn comes after player selects a card
+// Event listener for new card added to garbage pile OR add a "turn" boolean variable that will turn on and off between user/computer
+// Based on the value/suit of the card in the garbage pile, computer will take action (Jack - skip its turn, pick up 2, pick up 5) OR play a 2 or QS to counter the pickup
+// if garbage pile card is not special, randomly choose a card that matches in value or suit
+// app.garbageCardCheck = function(value, suit, code) {
+//     if (app.garbageHand[currentGarbageIndex].value == "JACK") {
+//         console.log('skip a turn');
+//         // display skip a turn
+//         // next player's turn
+//     } 
+//     // else if {
+//     //     (app.garbageHand[currentGarbageIndex].value == 2) {}
+//     // }
+// }
+
 
 app.checkRules = function(value, suit, code) {
     const currentGarbageIndex = app.garbageHand.length - 1;
     console.log(`current`, currentGarbageIndex);
     console.log(app.garbageHand);
-    
-    
-    // Check user selection against garbage pile card - if suit is the same OR same value OR value = 8
+
+    // Check user selection against garbage pile card - if suit is the same OR same value OR value = 8 
     if (value == app.garbageHand[currentGarbageIndex].value || 
         suit == app.garbageHand[currentGarbageIndex].suit ||
         value == 8 ) {
@@ -154,14 +169,15 @@ app.checkRules = function(value, suit, code) {
             }
         })
         app.addToPile("garbage", 1);
-
+        // Once card has been added to garbage pile, need to remove the card from the players hand
     } 
     // console.log(value, suit);
-    
+
     // Jack skips next players turn
-    // Two cards - pick up two, can be cumulative
-    // Queens of Spades - pick up 5, can be cumulative
+
+
 }
+
 
 app.startGame = function () {
     app.newDeck();
@@ -191,8 +207,8 @@ app.handSpread = function (){
                 "left": shiftX,
                 "top": shiftY           
             });
-        degrees += 6;
+        degrees += 8;
         shiftX += 10;
-        shiftY += 15;
+        shiftY += 10;
     }
 }

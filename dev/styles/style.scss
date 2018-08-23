@@ -22,10 +22,19 @@ body {
 }
 
 .cardContainer {
-    width: 60%;
+    width: 30%;
     position: absolute;
+    cursor: pointer;
 }
+
+// .cardContainer:hover {
+//     top: 15px;
+// }
 
 img {
     max-width: 100%;
+}
+
+.userHand img:hover {
+    border: 3px solid gold;
 }
