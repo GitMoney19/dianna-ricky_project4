@@ -98,8 +98,9 @@ app.addToPile = function (pileName, numberOfCards) {
 
     // Saving value and suit of garbage pile top card
     app.decidePile(pileName, cardArray);
-
 }
+
+app.removeFromPile = function ()
 
 // Once player chooses card, remove from user pile/array, add to garbage pile/array
 
@@ -170,6 +171,8 @@ app.checkRules = function(value, suit, code) {
         })
         app.addToPile("garbage", 1);
         // Once card has been added to garbage pile, need to remove the card from the players hand
+
+
     } 
     // console.log(value, suit);
 

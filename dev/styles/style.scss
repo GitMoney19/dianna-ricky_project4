@@ -7,6 +7,17 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.wrapper {
+    max-width: 1280px;
+    width: 80%;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+}
+
 .screen {
     border: 1px solid #000;
     height: 30vh;
@@ -22,7 +33,7 @@ body {
 }
 
 .cardContainer {
-    width: 30%;
+    width: 100px;
     position: absolute;
     cursor: pointer;
 }
@@ -37,4 +48,17 @@ img {
 
 .userHand img:hover {
     border: 3px solid gold;
+}
+
+.pageOverlay {
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.hidden {
+    visibility: hidden;
 }

@@ -8,19 +8,93 @@
     <title>CRAZY EIGHTS</title>
 </head>
 <body>
-    <h1>CRAZY EIGHTS</h1>
+    <header>
+        <h1>CRAZY EIGHTS</h1>
+        <button class="Rules">Rules</button>
+        <button class="Rules">Special Cards</button>
+    </header>
     <section class="gameScreen">
-        <div class="screen computerHand"></div>
-        <div class="screen">
-            <div class="deck">
-                <div class="cardContainer">
-                    <img src="assets/cardFace.png" alt="">
+        <div class="wrapper">
+            <div class="screen computerHand">
+                
+            </div>
+            <div class="screen garbageHand">
+                <div class="deck">
+                    <div class="cardContainer">
+                        <img src="assets/cardFace.png" alt="">
+                    </div>
+                </div> 
+            </div>
+            <div class="screen userHand">
+                
+            </div>
+        </div>
+        <div class="rulesOfTheGame pageOverlay hidden">
+            <div class="rulesHeading">
+                <h1>Crazy Eights</h1>
+                <h2>Rules of the Game</h2>
+                <h3>Objective: Be the first player to be rid of all the cards in your hand</h3>
+            </div>
+            <div class="rules">
+                <ul class="rulesList">
+                    <li class="rulesItem">
+                        <p>You can only play a card that is matching in either value or suit as the card in the centre unless you have an 8 in any suit.</p>
+                    </li>
+                    <li class="rulesItem">
+                        <p></p>
+                    </li>
+                    <li class="rulesItem">
+                        <p></p>
+                    </li>
+                    <li class="rulesItem">
+                        <p></p>
+                    </li>
+                    <li class="rulesItem">
+                        <p></p>
+                    </li>                    
+                </ul>
+            </div>
+            <div class="suitChoice">
+                <div class="suit1">
+                    <img src="assets/noun_Club_764176.png" alt="image of clubs">
+                </div>
+                <div class="suit2">
+                    <img src="assets/noun_Diamond_764171.png" alt="image of diamonds">
+                </div>
+                <div class="suit3">
+                    <img src="assets/noun_Heart_764174.png" alt="image of heart">
+                </div>
+                <div class="suit4">
+                    <img src="assets/noun_Spades_764175.png" alt="image of spades">
                 </div>
             </div>
-            <div class="garbageHand">
-            </div>     
+            <div class="specialCardsOverlay pageOverlay hidden">
+                <h1>Special Cards</h1>
+                <div class="specialCard cardEight">
+                    <figure class="icon"><img src="" alt=""></figure>
+                    <p class="specialCardRule">Eights of any suit are wild cards and can be played at any time regardless of what the card is in the discard pile.
+                    </p>
+                    <p class="specialCardRule">The player playing the card will choose what suit the next player will have to follow.
+                    </p>
+                </div>
+                <div class="specialCard cardQueenOfSpades">
+                    <figure class="icon">
+                        <img src="" alt="">
+                    </figure>
+                    <p class="specialCardRule">When the Queen of Spades is played, the player whose turn is next will have to pick up five cards.
+                    </p>
+                </div>
+                <div class="specialCard cardTwo">
+                    <figure class="icon">
+                        <img src="" alt="">
+                    </figure>
+                    <p class="specialCardRule">When a two of any suit is played, the player who's turn is next will have to pick up two cards.
+                    </p>
+                    <p class="specialCardRule">However, if the next player also has a two, the following player will have to pick up four.  Twos have cumulative effects.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="screen userHand"></div>
     </section>
 </body>
 <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
