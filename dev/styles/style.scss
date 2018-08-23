@@ -25,6 +25,10 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.garbageHand {
+    justify-content: space-between;
+}
 .computerHand, .userHand {
     // transform: rotate(-30deg);
 }

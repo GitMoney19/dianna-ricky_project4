@@ -15,6 +15,8 @@ const app = {};
 // Variables
 app.apiURL = "https://deckofcardsapi.com/api/deck/";
 app.promise = [];
+app.startOfGame = true;
+app.userHand = [];
 app.garbageHand = [];
 app.yourTurn = true;
 
@@ -48,9 +50,16 @@ app.dealCards = function (numberOfCards) {
                 app.dealtCards = res.cards;
                 app.cardsForPile = app.dealtCards; // Creating new mutable property
 
-                app.addToPile("user", 8);
-                app.addToPile("computer", 8);
-                app.addToPile("garbage", 1)
+                if (app.startOfGame === true) {
+                    app.addToPile("user", 8);
+                    app.addToPile("computer", 8);
+                    app.addToPile("garbage", 1)
+                    app.startOfGame = false;
+                } else if (app.yourTurn === true) {
+                    app.addToPile("user", numberOfCards);
+                } else if (app.yourTurn === false) {
+                    app.addToPile("computer", numberOfCards);
+                }
             });
         })
 }
@@ -58,7 +67,7 @@ app.dealCards = function (numberOfCards) {
 
 app.decidePile = function (pileName, hand){
     if (pileName === "user") {
-        app.userHand = hand;
+        app.userHand.push(hand[0]);
     } else if (pileName === "computer") {
         app.computerHand = hand;
     } else if (pileName === "garbage") {
@@ -102,9 +111,11 @@ app.addToPile = function (pileName, numberOfCards) {
 
     // Saving value and suit of garbage pile top card
     app.decidePile(pileName, cardArray);
+    
+    console.log(app.userHand);
 }
 
-app.removeFromPile = function ()
+// app.removeFromPile = function ()
 
 // Once player chooses card, remove from user pile/array, add to garbage pile/array
 app.removeFromPile = function (code) {
@@ -136,12 +147,13 @@ app.displayHands = function (dealtCards, hand) {
         $(hand).append(cardImageDiv);
     });
     // Styling for hands
-    app.handSpread();
+    app.handSpread(dealtCards.length);
 }
 
 // Collect user input
 app.events = function () {
     app.userTurn();
+    app.drawCard();
 }
 
 app.userTurn = function () {
@@ -152,23 +164,29 @@ app.userTurn = function () {
         const cardCode = $(this).attr("data-code");
         // app.garbageCardCheck();
         app.checkRules(cardValue, cardSuit, cardCode);
-        app.yourTurn = false;
+        
         app.computerTurn();
     })
     
 }
 
 app.computerTurn = function () {
-
     app.computerHand.forEach((card) => {
         const cardValue = card.value
         const cardSuit = card.suit
         const cardCode = card.code
-    
+        
         if (app.yourTurn === false) {
             app.checkRules(cardValue, cardSuit, cardCode);
             
         }
+    });
+}
+
+app.drawCard = function () {
+    $(".drawHand").on("click", function () {
+        console.log('Draw');
+        app.dealCards(1);
     });
 }
 
@@ -196,35 +214,34 @@ app.checkRules = function(value, suit, code) {
         suit == app.garbageHand[currentGarbageIndex].suit ||
         value == 8 ) {
 
-        console.log(`HELL YEA`);
+        // console.log(`HELL YEA`);
         
         // Searching user hand for chosen card and pushes to cardsForPile array
         if (app.yourTurn === true) {
             app.userHand.forEach((card) =>{
                 if (card.code === code) {
-                    console.log(card);
+                    // console.log(card);
                     
                     app.cardsForPile.push(card);
-                    console.log(app.cardsForPile);
                 }
             })
+            app.removeFromPile(code);
+            app.addToPile("garbage", 1);
+            app.yourTurn = false;
         } else {
             app.computerHand.forEach((card) => {
                 if (card.code === code) {
                     app.cardsForPile.push(card);
                 }
             })
+            app.removeFromPile(code);
+            app.addToPile("garbage", 1);
+            app.yourTurn = true;
         }
         
-        app.removeFromPile(code);
-        app.addToPile("garbage", 1);
-        app.yourTurn = true;
+        
         // Once card has been added to garbage pile, need to remove the card from the players hand
-
-
     } 
-    // console.log(value, suit);
-
     // Jack skips next players turn
 }
 
@@ -246,11 +263,11 @@ $(function () {
 
 //Styling + Animations
 
-app.handSpread = function (){
+app.handSpread = function (numberOfCards){
     let degrees = 0;
     let shiftX = 120;
     let shiftY = 0;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < numberOfCards; i++) {
         $(`.card${i}`)
             .css ({
                 "transform": `rotate(${degrees}deg)`,
