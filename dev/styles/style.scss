@@ -25,9 +25,13 @@ body {
     display: flex;
     justify-content: center;
 }
-// .computerHand, .userHand {
-//     // transform: rotate(-30deg);
-// }
+
+.garbageHand {
+    justify-content: space-between;
+}
+.computerHand, .userHand {
+    // transform: rotate(-30deg);
+}
 
 .cardContainer {
     width: 100px;
