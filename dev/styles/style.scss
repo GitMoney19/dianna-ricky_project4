@@ -7,8 +7,13 @@ body {
     display: flex;
     flex-direction: column;
 }
+.wrapper {
+    max-width: 1280px;
+    width: 80%;
+    margin: 0 auto;
+}
 .screen {
-    border: 1px solid #000;
+    // border: 1px solid #000;
     height: 30vh;
     width: 100%;
     display: flex;
@@ -16,9 +21,12 @@ body {
     position: relative;
 }
 
-.deck, .garbageHand {
+.deck, .garbageHand, .userHand {
     display: flex;
     justify-content: center;
+}
+.computerHand, .userHand {
+    // transform: rotate(-30deg);
 }
 
 .cardContainer {
@@ -26,10 +34,6 @@ body {
     position: absolute;
     cursor: pointer;
 }
-
-// .cardContainer:hover {
-//     top: 15px;
-// }
 
 img {
     max-width: 100%;
