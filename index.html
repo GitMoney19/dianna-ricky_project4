@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Chivo:400,700|Overpass" rel="stylesheet">
     <link rel="stylesheet" href="public/styles/style.css">
     <title>CRAZY EIGHTS</title>
 </head>
 <body>
     <header>
-        <h1>CRAZY EIGHTS</h1>
-        <button class="Rules">Rules</button>
-        <button class="Rules">Special Cards</button>
+        <div class="wrapper">
+            <h1>CRAZY EIGHTS</h1>
+            <div>
+                <button class="Rules">Special Cards</button>
+            </div>
+            <div>
+                <button class="Rules">Rules</button>
+            </div>
+        </div>
     </header>
     <section class="gameScreen">
         <div class="wrapper">
@@ -28,6 +35,22 @@
             </div>
             <div class="screen userHand">
                 
+            </div>
+        </div>
+        <div class="startscreen pageOverlay">
+            <div class="wrapper">
+                <div class="start popup">
+                    <h1>CRAZY EIGHTS</h1>
+                    <div class="button startButton">
+                        <p>Click to Start</p>
+                    </div>
+                    <div class="button startButton">
+                        <p>Special Cards</p>
+                    </div>
+                    <div class="button startButton">
+                        <p>Rules</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="rulesOfTheGame pageOverlay">
@@ -96,25 +119,25 @@
                 <div class="popup">
                     <div class="suitPick diamond">
                         <h2>diamond</h2>
-                        <figure>
+                        <figure class="suitImage">
                             <img src="assets/003-diamond.png" alt="image of diamonds">
                         </figure>
                     </div>
                     <div class="suitPick club">
                         <h2>club</h2>
-                        <figure>
+                        <figure class="suitImage">
                             <img src="assets/004-clubs.png" alt="image of clubs">
                         </figure>
                     </div>
                     <div class="suitPick heart">
                         <h2>heart</h2>
-                        <figure>
+                        <figure class="suitImage">
                             <img src="assets/002-hearts.png" alt="image of heart">
                         </figure>
                     </div>
                     <div class="suitPick spades">
                         <h2>spades</h2>
-                        <figure>
+                        <figure class="suitImage">
                             <img src="assets/001-spades.png" alt="image of spades">
                         </figure>
                     </div>
