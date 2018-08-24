@@ -29,72 +29,95 @@
                 
             </div>
         </div>
-        <div class="rulesOfTheGame pageOverlay wrapper">
-            <div class="rulesHeading">
-                <h1>Crazy Eights</h1>
-                <h2>Rules of the Game</h2>
-                <h3>Objective: Be the first player to be rid of all the cards in your hand</h3>
-            </div>
-            <div class="rules">
-                <ul class="rulesList">
-                    <li class="rulesItem">
-                        <p>You can only play a card that is matching in either value or suit as the card in the centre unless you have an 8 in any suit.</p>
-                    </li>
-                    <li class="rulesItem">
-                        <p>When a player plays a "2" card, the next player must pick up two cards.</p>
-                    </li>
-                    <li class="rulesItem">
-                        <p>When a player plays a "Jack" card, the next player will miss a turn.</p>
-                    </li>
-                    <li class="rulesItem">
-                        <p>The "8" card of any suit is a wild card, and it can be played at anytime regardless of the value/suit in the discard pile.  The player who played the 8 will get to choose which suit the next player must play.</p>
-                    </li>
-                    <li class="rulesItem">
-                        <p>You can play more than one card if the value of the pair/triplet of cards matches the suit or value.</p>
-                    </li>                    
-                </ul>
-            </div>
-            <div class="suitChoice hidden">
-                <div class="suit1">
-                    <img src="assets/noun_Club_764176.png" alt="image of clubs">
-                </div>
-                <div class="suit2">
-                    <img src="assets/noun_Diamond_764171.png" alt="image of diamonds">
-                </div>
-                <div class="suit3">
-                    <img src="assets/noun_Heart_764174.png" alt="image of heart">
-                </div>
-                <div class="suit4">
-                    <img src="assets/noun_Spades_764175.png" alt="image of spades">
+        <div class="rulesOfTheGame pageOverlay">
+            <div class="wrapper">
+                <div class="rules popup">
+                    <div class="rulesHeading">
+                        <h1>Crazy Eights</h1>
+                        <h2>Rules of the Game</h2>
+                        <h3>Objective: Be the first player to be rid of all the cards in your hand</h3>
+                    </div>
+                    <ul class="rulesList">
+                        <li class="rulesItem">
+                            <p>You can only play a card that is matching in either value or suit as the card in the centre unless you have an 8 in any suit.</p>
+                        </li>
+                        <li class="rulesItem">
+                            <p>When a player plays a "2" card, the next player must pick up two cards.</p>
+                        </li>
+                        <li class="rulesItem">
+                            <p>When a player plays a "Jack" card, the next player will miss a turn.</p>
+                        </li>
+                        <li class="rulesItem">
+                            <p>The "8" card of any suit is a wild card, and it can be played at anytime regardless of the value/suit in the discard pile.  The player who played the 8 will get to choose which suit the next player must play.</p>
+                        </li>
+                        <li class="rulesItem">
+                            <p>You can play more than one card if the value of the pair/triplet of cards matches the suit or value.</p>
+                        </li>                    
+                    </ul>
                 </div>
             </div>
-            <div class="specialCardsOverlay pageOverlay hidden">
-                <h1>Special Cards</h1>
-                <div class="specialCard cardEight">
-                    <figure class="icon"><img src="" alt=""></figure>
-                    <p class="specialCardRule">Eights of any suit are wild cards and can be played at any time regardless of what the card is in the discard pile.
-                    </p>
-                    <p class="specialCardRule">The player playing the card will choose what suit the next player will have to follow.
-                    </p>
+        </div>
+        <div class="specialCardsOverlay pageOverlay hidden">
+            <div class="wrapper">
+                <div class="specialCards popup">
+                    <div class="specialCardsHeading">
+                        <h1>Special Cards</h1>
+                    </div>
+                    <div class="specialCard cardEight">
+                        <figure class="icon"><img src="" alt=""></figure>
+                        <p class="specialCardRule">Eights of any suit are wild cards and can be played at any time regardless of what the card is in the discard pile.
+                        </p>
+                        <p class="specialCardRule">The player playing the card will choose what suit the next player will have to follow.
+                        </p>
+                    </div>
+                    <div class="specialCard cardQueenOfSpades">
+                        <figure class="icon">
+                            <img src="" alt="">
+                        </figure>
+                        <p class="specialCardRule">When the Queen of Spades is played, the player whose turn is next will have to pick up five cards.
+                        </p>
+                    </div>
+                    <div class="specialCard cardTwo">
+                        <figure class="icon">
+                            <img src="" alt="">
+                        </figure>
+                        <p class="specialCardRule">When a two of any suit is played, the player who's turn is next will have to pick up two cards.
+                        </p>
+                        <p class="specialCardRule">However, if the next player also has a two, the following player will have to pick up four.  Twos have cumulative effects.
+                        </p>
+                    </div>    
                 </div>
-                <div class="specialCard cardQueenOfSpades">
-                    <figure class="icon">
-                        <img src="" alt="">
-                    </figure>
-                    <p class="specialCardRule">When the Queen of Spades is played, the player whose turn is next will have to pick up five cards.
-                    </p>
+            </div>
+        </div>
+        </div>
+        <div class="suitChoice hidden">
+            <div class="wrapper">
+                <div class="popup">
+                    <div class="suitPick diamond">
+                        <h2>diamond</h2>
+                        <figure>
+                            <img src="assets/003-diamond.png" alt="image of diamonds">
+                        </figure>
+                    </div>
+                    <div class="suitPick club">
+                        <h2>club</h2>
+                        <figure>
+                            <img src="assets/004-clubs.png" alt="image of clubs">
+                        </figure>
+                    </div>
+                    <div class="suitPick heart">
+                        <h2>heart</h2>
+                        <figure>
+                            <img src="assets/002-hearts.png" alt="image of heart">
+                        </figure>
+                    </div>
+                    <div class="suitPick spades">
+                        <h2>spades</h2>
+                        <figure>
+                            <img src="assets/001-spades.png" alt="image of spades">
+                        </figure>
+                    </div>
                 </div>
-                <div class="specialCard cardTwo">
-                    <figure class="icon">
-                        <img src="" alt="">
-                    </figure>
-                    <p class="specialCardRule">When a two of any suit is played, the player who's turn is next will have to pick up two cards.
-                    </p>
-                    <p class="specialCardRule">However, if the next player also has a two, the following player will have to pick up four.  Twos have cumulative effects.
-                    </p>
-                </div>
-                <div class="garbageHand">
-                </div>     
             </div>
         </div>
     </section>
