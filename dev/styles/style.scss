@@ -7,55 +7,96 @@ body {
     display: flex;
     flex-direction: column;
 }
+
 .wrapper {
-    max-width: 1280px;
-    width: 80%;
-    margin: 0 auto;
+  max-width: 1280px;
+  width: 80%;
+  margin: 0 auto; 
 }
+
+// Header Section
+
+header .wrapper {
+  display: flex;
+  align-items: center;
+}
+
+button {
+  background: none;
+  border: 2px solid white;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+// Main Section
+
 .screen {
-    // border: 1px solid #000;
-    height: 30vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: relative;
+  height: 30vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative; 
 }
 
 .deck, .garbageHand, .userHand {
-    display: flex;
-    justify-content: center;
-}
-
-.garbageHand {
-    justify-content: space-between;
-}
-.computerHand, .userHand {
-    // transform: rotate(-30deg);
+  display: flex;
+  justify-content: center; 
 }
 
 .cardContainer {
-    width: 100px;
-    position: absolute;
-    cursor: pointer;
+  width: 150px;
+  position: absolute;
+  cursor: pointer; 
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%; 
 }
 
 .userHand img:hover {
-    border: 3px solid gold;
+  border: 3px solid gold; 
 }
 
+// Overlay Stylings - General
+
 .pageOverlay {
+  background-color: rgba(0,0,0, 0.3); 
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.popup {
     background: white;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    margin: 10% 10%;
+    padding: 10% 50px;
+    border-radius: 15px;
+}
+
+.rulesHeading, .specialCardsHeading {
+    text-align: center;
 }
 
 .hidden {
-    visibility: hidden;
+  visibility: hidden; 
+}
+
+.rulesList, {
+    padding: 0 10%;
+}
+
+// Overlay - Suit Choice
+
+.suitPick {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% / 2 - 60px);
+}
+
+.suitImage {
+  margin: 30px;
 }
