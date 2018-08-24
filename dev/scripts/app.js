@@ -18,10 +18,10 @@ app.promise = [];
 app.startOfGame = true;
 app.garbageHand = [];
 app.yourTurn = true;
+app.legalMove = false;
 
 
 // Make AJAX request with user inputted data
-
 app.ajaxRequest = function (urlEnding) {
     return $.ajax({
         url: app.apiURL + urlEnding,
@@ -79,6 +79,8 @@ app.decidePile = function (pileName, hand) {
         } else {
             app.computerHand.push(hand[0]);
         }
+        console.log('computer:yourTurn:', app.yourTurn);
+        
         app.displayHands(app.computerHand, `.${pileName}Hand`);
     } else if (pileName === "garbage") {
         app.garbageHand.push(hand[0]);
@@ -117,14 +119,10 @@ app.addToPile = function (pileName, numberOfCards) {
     //     console.log(response);
     // });
 
-    // Displaying the hand on screen
-
-
     // Saving value and suit of garbage pile top card
     app.decidePile(pileName, cardArray);
 }
 
-// app.removeFromPile = function ()
 
 // Once player chooses card, remove from user pile/array, add to garbage pile/array
 app.removeFromPile = function (code) {
@@ -134,22 +132,18 @@ app.removeFromPile = function (code) {
     } else {
         app.computerHand = app.computerHand.filter(card => card.code != code);
     }
-    // console.log(app.userHand);
     const cards = $(`.cardContainer[data-code="${code}"]`).remove();
-
-    // console.log(cards);
-
 }
 
 // Display data on the page
 app.displayHands = function (dealtCards, hand) {
-    console.log(dealtCards);
+    console.log(hand, app.computerHand);
+    
     $(hand).empty()
 
     dealtCards.forEach((card, i) => {
         const cardImageDiv = $("<div>")
             .addClass(`cardContainer card${i}`)
-            // .css("transform", "rotate(45deg)")
             .attr({
                 "data-value": card.value,
                 "data-suit": card.suit,
@@ -170,35 +164,52 @@ app.events = function () {
 }
 
 app.userTurn = function () {
+    app.legalMove = false;
 
     $('.userHand').on('click', '.cardContainer', function () {
         const cardValue = $(this).attr("data-value");
         const cardSuit = $(this).attr("data-suit");
         const cardCode = $(this).attr("data-code");
-        // app.garbageCardCheck();
         app.checkRules(cardValue, cardSuit, cardCode);
-        app.computerTurn();
+        if (app.legalMove === true) {
+            app.computerTurn();
+        }
     })
 
 }
 
 app.computerTurn = function () {
-    app.computerHand.forEach((card) => {
-        const cardValue = card.value
-        const cardSuit = card.suit
-        const cardCode = card.code
+
+    app.legalMove = false;
+
+    // If computer has no available moves then draw a card
+    for (let i = 0; i < app.computerHand.length; i++) {
+        const cardValue = app.computerHand[i].value
+        const cardSuit = app.computerHand[i].suit
+        const cardCode = app.computerHand[i].code
 
         if (app.yourTurn === false) {
-            
             app.checkRules(cardValue, cardSuit, cardCode);
-            console.log('checkrules', app.yourTurn);
-            // app.dealCards(1);
+            // break;
         }
-    });
-    
-    // app.drawCard();
-    console.log(app.yourTurn);
-    
+    }
+
+    if (app.legalMove === false) {
+        app.yourTurn = false;
+        app.dealCards(1);
+        console.log('No legal moves');
+    }
+
+    // app.yourTurn = true;
+    // app.computerHand.forEach((card, i) => {
+    //     const cardValue = card.value
+    //     const cardSuit = card.suit
+    //     const cardCode = card.code
+
+    //     if (app.yourTurn === false) {
+    //         app.checkRules(cardValue, cardSuit, cardCode);
+    //     }
+    // });
 }
 
 app.drawCard = function () {
@@ -226,20 +237,16 @@ app.drawCard = function () {
 
 app.checkRules = function (value, suit, code) {
     const currentGarbageIndex = app.garbageHand.length - 1;
-    // app.rulesPickUp(currentGarbageIndex);
     // Check user selection against garbage pile card - if suit is the same OR same value OR value = 8 
     if (value == app.garbageHand[currentGarbageIndex].value ||
         suit == app.garbageHand[currentGarbageIndex].suit ||
         value == 8) {
-
-        // console.log(`HELL YEA`);
+            app.legalMove = true;
 
         // Searching user hand for chosen card and pushes to cardsForPile array
         if (app.yourTurn === true) {
             app.userHand.forEach((card) => {
                 if (card.code === code) {
-                    // console.log(card);
-
                     app.cardsForPile.push(card);
                 }
             })
@@ -253,12 +260,9 @@ app.checkRules = function (value, suit, code) {
                 }
             })
             app.removeFromPile(code);
-            app.dealCards(1);
             app.addToPile("garbage", 1);
             app.yourTurn = true;
         }
-
-
         // Once card has been added to garbage pile, need to remove the card from the players hand
     }
     // Jack skips next players turn
@@ -280,8 +284,8 @@ $(function () {
     app.init();
 });
 
-//Styling + Animations
 
+//Styling + Animations
 app.handSpread = function (numberOfCards) {
     let degrees = 0;
     let shiftX = 120;
@@ -336,7 +340,6 @@ app.rulesQueen = function (currentGarbageIndex) {
     if (app.garbageHand[currentGarbageIndex].value === "QUEEN" && app.garbageHand[currentGarbageIndex].suit === "SPADES") {
         app.dealCards(5);
         console.log(`queen is played`);
-        
     }
 }
 
