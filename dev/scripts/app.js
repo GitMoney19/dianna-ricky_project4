@@ -16,7 +16,6 @@ const app = {};
 app.apiURL = "https://deckofcardsapi.com/api/deck/";
 app.promise = [];
 app.startOfGame = true;
-app.userHand = [];
 app.garbageHand = [];
 app.yourTurn = true;
 
@@ -67,11 +66,22 @@ app.dealCards = function (numberOfCards) {
 
 app.decidePile = function (pileName, hand){
     if (pileName === "user") {
-        app.userHand.push(hand[0]);
+        if (app.startOfGame === true) {
+            app.userHand = hand;
+        } else {
+            app.userHand.push(hand[0]);
+        }
+        app.displayHands(app.userHand, `.${pileName}Hand`);
     } else if (pileName === "computer") {
-        app.computerHand = hand;
+        if (app.startOfGame === true) {
+            app.computerHand = hand;
+        } else {
+            app.computerHand.push(hand[0]);
+        }
+        app.displayHands(app.computerHand, `.${pileName}Hand`);
     } else if (pileName === "garbage") {
         app.garbageHand.push(hand[0]);
+        app.displayHands(hand, `.${pileName}Hand`);
     }
 }
 
@@ -107,12 +117,10 @@ app.addToPile = function (pileName, numberOfCards) {
     // });
 
     // Displaying the hand on screen
-    app.displayHands(cardArray, `.${pileName}Hand`);
+    
 
     // Saving value and suit of garbage pile top card
     app.decidePile(pileName, cardArray);
-    
-    console.log(app.userHand);
 }
 
 // app.removeFromPile = function ()
@@ -134,6 +142,9 @@ app.removeFromPile = function (code) {
 
 // Display data on the page
 app.displayHands = function (dealtCards, hand) {
+    console.log(dealtCards);
+    $(hand).empty()
+    
     dealtCards.forEach((card, i) => {
         const cardImageDiv = $("<div>")
             .addClass(`cardContainer card${i}`)
@@ -178,9 +189,10 @@ app.computerTurn = function () {
         
         if (app.yourTurn === false) {
             app.checkRules(cardValue, cardSuit, cardCode);
-            
         }
     });
+    // app.drawCard();
+    // app.dealCards(1);
 }
 
 app.drawCard = function () {
