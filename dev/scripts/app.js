@@ -251,10 +251,10 @@ app.checkRules = function (value, suit, code) {
         if (app.yourTurn === true) {
             app.searchHand(app.userHand, code);
             app.yourTurn = false;
-            app.rulesPickUp(currentGarbageIndex);
+            // app.rulesPickUp(currentGarbageIndex);
         } else {
             app.searchHand(app.computerHand, code);
-            // app.yourTurn = true;
+            app.yourTurn = true;
         }
     }
     // Jack skips next players turn
