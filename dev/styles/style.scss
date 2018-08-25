@@ -38,13 +38,34 @@ button {
   position: relative; 
 }
 
-.deck, .garbageHand, .userHand {
+.garbageHand, .userHand {
   display: flex;
   justify-content: center; 
 }
 
-.cardContainer {
-  width: 150px;
+.deck {
+  display: flex;
+  justify-content: space-between;
+}
+
+.drawHand {
+  width: 100px;
+}
+
+.garbageHand .cardContainer {
+  width: 100px;
+  // position: absolute;
+  cursor: pointer; 
+}
+
+.computerHand .cardContainer {
+  width: 100px;
+  position: absolute;
+  cursor: pointer; 
+}
+
+.userHand .cardContainer {
+  width: 100px;
   position: absolute;
   cursor: pointer; 
 }
@@ -72,8 +93,10 @@ img {
 
 .popup {
     background: white;
-    margin: 10% 10%;
-    padding: 10% 50px;
+    width: 40%;
+    height: 80vh;
+    margin: 5% auto;
+    padding: 5% 50px;
     border-radius: 15px;
 }
 
@@ -82,8 +105,25 @@ img {
 }
 
 .hidden {
-  visibility: hidden; 
+  display: none;
 }
+
+// Overlay - Start Screen
+
+.start {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  background-color: lightblue;
+  width: 50%;
+  margin-bottom: 15px;
+}
+
+// Overlay- Rules Page
 
 .rulesList, {
     padding: 0 10%;
