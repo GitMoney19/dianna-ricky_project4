@@ -54,6 +54,7 @@ app.dealCards = function (numberOfCards) {
             app.startOfGame = false;
         } else if (app.yourTurn === true) {
             app.addToPile("user", numberOfCards);
+
         } else if (app.yourTurn === false) {
             app.addToPile("computer", numberOfCards);
         }
@@ -156,7 +157,7 @@ app.events = function () {
 
 app.userTurn = function () {
     app.legalMove = false;
-
+    console.log(`My turn`);
     // Listing for click on card in user hand
     $('.userHand').on('click', '.cardContainer', function () {
         // Saving card value, suit, and code for checking rules
@@ -175,25 +176,31 @@ app.userTurn = function () {
 }
 
 app.computerTurn = function () {
+    app.yourTurn = false;
 
     // Resets the counter for number of cards the user has drawn
     app.userDrawCount = 0
     app.checkComputerHand();
 
+    console.log(``);
+
     // If computer has no available moves then draw a card
     if (app.legalMove === false) {
         app.dealCards(1);
-
         console.log('Computer has no legal moves');
+        console.log("no legal", app.yourTurn);
     }
+    // app.yourTurn = true;
 }
 
 // Go through all cards in computer hand to check for available rules
 app.checkComputerHand = function () {
+
     app.computerHand.forEach((card, i) => {
         const cardValue = card.value
         const cardSuit = card.suit
         const cardCode = card.code
+
 
         if (app.yourTurn === false) {
             app.checkRules(cardValue, cardSuit, cardCode);
@@ -207,37 +214,29 @@ app.drawCard = function () {
     // Reset count when user turn ends
 
     $(".drawHand").on("click", function () {
+        app.yourTurn = true;
         console.log('Draw Count', app.userDrawCount);
+        console.log("draw card", app.yourTurn);
+
         if (app.userDrawCount === 0) {
             app.userDrawCount++;
             app.dealCards(1);
+            // app.computerTurn();
         } else {
             console.log('You already drew a card, its the computer\'s turn now');
         }
+        app.computerTurn();
+        console.log(`draw card after computer turn initiated`, app.yourTurn);
     });
 
-}
 
-// Computer turn comes after player selects a card
-// Event listener for new card added to garbage pile OR add a "turn" boolean variable that will turn on and off between user/computer
-// Based on the value/suit of the card in the garbage pile, computer will take action (Jack - skip its turn, pick up 2, pick up 5) OR play a 2 or QS to counter the pickup
-// if garbage pile card is not special, randomly choose a card that matches in value or suit
-// app.garbageCardCheck = function(value, suit, code) {
-//     if (app.garbageHand[currentGarbageIndex].value == "JACK") {
-//         console.log('skip a turn');
-//         // display skip a turn
-//         // next player's turn
-//     } 
-//     // else if {
-//     //     (app.garbageHand[currentGarbageIndex].value == 2) {}
-//     // }
-// }
+}
 
 
 app.checkRules = function (value, suit, code) {
     const currentGarbageIndex = app.garbageHand.length - 1;
     const topGarbageCard = app.garbageHand[currentGarbageIndex];
-
+    // app.rulesPickUp(currentGarbageIndex);
     // Check user selection against garbage pile card - if suit is the same OR same value OR value = 8 
     if (value == topGarbageCard.value ||
         suit == topGarbageCard.suit ||
@@ -245,19 +244,18 @@ app.checkRules = function (value, suit, code) {
 
         app.legalMove = true; // If condition met the move is legal
 
-
-
         // Searching user hand for chosen card and pushes to cardsForPile array
         if (app.yourTurn === true) {
             app.searchHand(app.userHand, code);
             app.yourTurn = false;
-            // app.rulesPickUp(currentGarbageIndex);
+            // app.rulesPickUp(topGarbageCard);
         } else {
             app.searchHand(app.computerHand, code);
             app.yourTurn = true;
+            console.log(`after searchhand`, app.yourTurn);
+
         }
     }
-    // Jack skips next players turn
 }
 
 app.searchHand = function (hand, code) {
@@ -322,28 +320,32 @@ app.handSpread = function (numberOfCards) {
 //     // change it so the user only has to match the suit of the randomly assigned suit 
 // }
 
-app.rulesPickUp = function (currentGarbageIndex) {
-    // console.log('rules pickup', app.garbageHand[currentGarbageIndex].value);
-    // console.log(app.garbageHand, currentGarbageIndex);
+app.rulesPickUp = function (topGarbageCard) {
 
-    if (app.garbageHand[currentGarbageIndex].value == 2) {
+    if (app.garbageHand[topGarbageCard].value == 2) {
         // app.yourTurn = false;
+        // if (app.yourTurn === true) {
+
+        // } else {
+
+        // }
         app.dealCards(2);
 
         console.log(app.yourTurn);
 
         console.log('2 is played');
-
-        // in the event that other 2's were previously played, accumulate their value
-        // if (app.garbageHand[currentGarbageIndex - 3].value === 3) {
-        //     app.dealCards(8);
-        // } else if (app.garbageHand[currentGarbageIndex - 2].value === 2 &&
-        //     app.garbageHand.length >= 2) {
-        //     app.dealCards(6);
-        // } else if (app.garbageHand[currentGarbageIndex - 1].value === 1) {
-        //     app.dealCards(4);
-        // }
     }
+
+    // in the event that other 2's were previously played, accumulate their value
+    // if (app.garbageHand[currentGarbageIndex - 3].value === 3) {
+    //     app.dealCards(8);
+    // } else if (app.garbageHand[currentGarbageIndex - 2].value === 2 &&
+    //     app.garbageHand.length >= 2) {
+    //     app.dealCards(6);
+    // } else if (app.garbageHand[currentGarbageIndex - 1].value === 1) {
+    //     app.dealCards(4);
+    // }
+
     // app.rulesQueen(currentGarbageIndex);
     // app.rulesJack(currentGarbageIndex);
 }
