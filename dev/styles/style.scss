@@ -3,10 +3,11 @@
 @import "partials/typography";
 
 body {
-    background-color: green;
+    background: radial-gradient(ellipse at center, #408E2F 0%,#003D1A 85%);
     display: flex;
     flex-direction: column;
 }
+
 
 .wrapper {
   max-width: 1280px;
@@ -22,10 +23,30 @@ header .wrapper {
 }
 
 button {
-  background: none;
+  background: white;
   border: 2px solid white;
-  border-radius: 15px;
-  padding: 15px;
+  border-radius: 50%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+
+.circleButtons:hover {
+  background: gold;
+}
+
+.buttonImage {
+  width: 50px;
+}
+
+.sideButtonsPanel {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 // Main Section
@@ -93,9 +114,9 @@ img {
 
 .popup {
     background: white;
-    width: 40%;
+    width: 400px;
     height: 80vh;
-    margin: 5% auto;
+    margin: 12% auto;
     padding: 5% 50px;
     border-radius: 15px;
 }
@@ -121,6 +142,15 @@ img {
   background-color: lightblue;
   width: 50%;
   margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.startImage {
+  width: 30%;
 }
 
 // Overlay- Rules Page
@@ -139,4 +169,13 @@ img {
 
 .suitImage {
   margin: 30px;
+}
+
+// Overlay - End Screen
+
+.end {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

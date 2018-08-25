@@ -12,11 +12,29 @@
     <header>
         <div class="wrapper">
             <h1>CRAZY EIGHTS</h1>
-            <div>
-                <button class="Rules">Special Cards</button>
-            </div>
-            <div>
-                <button class="Rules">Rules</button>
+            <div class="sideButtonsPanel">
+                <div>
+                    <button class="rules circleButtons">
+                        <figure class="buttonImage">
+                            <img src="assets/001-rules.png" alt="">
+                        </figure>                    
+                    </button>
+                </div>
+                <div>
+                    <button class="specialCards circleButtons">
+                        <figure class="buttonImage">
+                            <img src="assets/002-poker.png" alt="">
+                        </figure>
+                    </button>
+    
+                </div>
+                <div>
+                    <button class="restart circleButtons">
+                        <figure class="buttonImage">
+                            <img src="assets/restart" alt="">
+                        </figure>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -43,7 +61,7 @@
                     <div>
                         <h1>CRAZY EIGHTS</h1>
                     </div>
-                    <figure>
+                    <figure class="startImage">
                         <img src="assets/002-hearts.png" alt="">
                     </figure>
                     <div class="button startButton">
@@ -55,6 +73,27 @@
                     <div class="button startButton">
                         <p>Rules</p>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="endScreen pageOverlay hidden">
+            <div class="wrapper">
+                <div class="end popup">
+                    <div>
+                        <h1>You lose.</h1>
+                    </div>
+                    <figure class="startImage">
+                        <img src="assets/001-dislike.png" alt="">
+                    </figure>
+                    <div class="button startButton">
+                        <p>Try Again?</p>
+                    </div>
+                    <!-- <div class="button startButton">
+                        <p>Special Cards</p>
+                    </div>
+                    <div class="button startButton">
+                        <p>Rules</p>
+                    </div> -->
                 </div>
             </div>
         </div>
