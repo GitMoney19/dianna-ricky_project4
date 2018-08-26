@@ -167,6 +167,26 @@ img {
   font-weight: 700;
   font-size: 2.4rem;
 }
+
+.popupWrapper {
+  position: relative;
+}
+
+.cornerSuitTop {
+  width: 60px;
+  position: absolute;
+  margin: 30px;
+  top: 0;
+  left: 0;
+}
+
+.cornerSuitBottom {
+  width: 60px;
+  position: absolute;
+  margin: 30px;
+  bottom: 0;
+  right: 0;
+}
 // Overlay - Start Screen
 
 .start {
