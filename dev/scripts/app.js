@@ -38,31 +38,50 @@ app.newDeck = function () {
     app.ajaxRequest(urlEnding).then((res) => {
         app.deckID = res.deck_id;
         app.dealCards(17); // Every Time a new deck is made 17 cards are dealt
+        console.log('Your deck id is:' + app.deckID);
+
     })
 }
 
 // Dealing Cards
 app.dealCards = function (numberOfCards) {
-    const urlEnding = `${app.deckID}/draw/?count=${numberOfCards}`;
+    let urlEnding = `${app.deckID}/draw/?count=${numberOfCards}`;
     app.promise = (app.ajaxRequest(urlEnding));
 
     app.promise.then((res) => {
-        app.cardsForPile = res.cards; // Creating new mutable property
 
-        if (app.startOfGame === true) {
-            app.addToPile("user", 8);
-            app.addToPile("computer", 8);
-            app.addToPile("garbage", 1)
-            app.startOfGame = false;
-        } else if (app.yourTurn === true) {
-            app.addToPile("user", numberOfCards);
+        // If deck runs out of cards draw from garbage pile
+        if (res.remaining == 0) {
+            // <<deck_id>>/pile/<<pile_name>>/draw/?cards=AS
+            urlEnding = `${app.deckID}/pile/garbage/draw/?count=${numberOfCards}`
+            app.promise = (app.ajaxRequest(urlEnding));
 
-        } else if (app.yourTurn === false) {
-            app.addToPile("computer", numberOfCards);
+            $.when(app.promse)
+                .then((garbageRes) => {
+                    app.decideDeal(numberOfCards)
+                    app.cardsForPile = garbageRes.cards; // Creatin new mutable propertyg
+                });
+        } else {
+            app.cardsForPile = res.cards; // Creating new mutable property
+            app.decideDeal(numberOfCards);
         }
+
     });
 }
 
+app.decideDeal = function (numberOfCards) {
+    if (app.startOfGame === true) {
+        app.addToPile("user", 8);
+        app.addToPile("computer", 8);
+        app.addToPile("garbage", 1)
+        app.startOfGame = false;
+    } else if (app.yourTurn === true) {
+        app.addToPile("user", numberOfCards);
+
+    } else if (app.yourTurn === false) {
+        app.addToPile("computer", numberOfCards);
+    }
+}
 
 // Add to pile
 app.addToPile = function (pileName, numberOfCards) {
@@ -108,7 +127,10 @@ app.decidePile = function (pileName, hand) {
         app.yourTurn = true; // Changing back to user turn after computer has played
     } else if (pileName === "garbage") {
         hand.forEach(card => app.garbageHand.push(card));
-        app.displayHands(hand, `.${pileName}Hand`);
+        app.displayGarbage(hand, `.${pileName}Hand`);
+        if (app.startOfGame) {
+            $.when(app.promise).then(() => app.currentSuit(hand[hand.length - 1].suit));
+        }
     }
 }
 
@@ -143,6 +165,45 @@ app.displayHands = function (dealtCards, hand) {
     app.handSpread(dealtCards.length);
 }
 
+// Angle + spread of each players hands
+app.handSpread = function (numberOfCards) {
+    let degrees = 0;
+    let shiftX = 0;
+    let shiftY = 0;
+    for (let i = 0; i < numberOfCards; i++) {
+        $(`.card${i}`)
+            .css({
+                "transform": `rotate(${degrees}deg)`,
+                "left": shiftX,
+                "top": shiftY
+            });
+        degrees += 8;
+        shiftX += 10;
+        shiftY += 10;
+    }
+}
+
+app.displayGarbage = function (dealtCards, hand) {
+    dealtCards.forEach((card, i) => {
+        const cardImageDiv = $("<div>")
+            .addClass(`cardContainer card${i}`)
+            .attr({
+                "data-value": card.value,
+                "data-suit": card.suit,
+                "data-code": card.code
+            });
+
+        const cardImage = $("<img>")
+            .attr("src", card.image)
+            .css({
+                // "transform": `rotate(${app.random(45)}deg)`,
+            });
+
+        cardImageDiv.append(cardImage);
+        $(hand).append(cardImageDiv);
+    });
+}
+
 // Collect user input
 app.events = function () {
     app.userTurn();
@@ -150,10 +211,12 @@ app.events = function () {
 }
 
 app.userTurn = function () {
-    app.legalMove = false;
+
     console.log(`My turn`);
     // Listing for click on card in user hand
     $('.userHand').on('click', '.cardContainer', function () {
+        app.legalMove = false;
+
         // Saving card value, suit, and code for checking rules
         const cardValue = $(this).attr("data-value");
         const cardSuit = $(this).attr("data-suit");
@@ -166,6 +229,7 @@ app.userTurn = function () {
             app.legalMove = false;
             app.yourTurn = false;
 
+            $.when(app.promise).then(() => app.currentSuit(cardSuit));
             app.rulesPickUp(cardValue, cardSuit);
 
             if (app.yourTurn === false) {
@@ -181,8 +245,10 @@ app.computerTurn = function () {
     console.log('');
     console.log(`Computer Turn (${app.computerHand.length} cards in hand)`);
 
+    app.endOfGame(); // Check if end game conditions met
+
     app.legalMove = false; // Reseting legal move for computer
-    app.yourTurn = false;
+    app.yourTurn = false; // Changing to computer turn
 
     // Resets the counter for number of cards the user has drawn
     app.userDrawCount = 0
@@ -231,11 +297,7 @@ app.drawCard = function () {
             app.yourTurn = false;
             app.computerTurn();
         })
-
-        // console.log(`draw card after computer turn initiated`, app.yourTurn);
     });
-
-
 }
 
 
@@ -253,21 +315,24 @@ app.checkRules = function (value, suit, code) {
         // Searching user hand for chosen card and pushes to cardsForPile array
         if (app.yourTurn === true) {
             console.log(`I played a ${value} of ${suit}`);
+            console.log('Legal move:', app.legalMove);
+
 
             app.searchHand(app.userHand, code);
-
             app.yourTurn = false;
-
         } else {
             console.log(`Computer plays a ${value} of ${suit}`);
 
             app.searchHand(app.computerHand, code);
             app.yourTurn = true;
+            $.when(app.promise).then(() => app.currentSuit(suit));
+
             app.rulesPickUp(value, suit);
         }
     }
 }
 
+// Searching user hand for chosen card and pushes to cardsForPile array
 app.searchHand = function (hand, code) {
 
     hand.forEach((card) => {
@@ -292,7 +357,6 @@ app.init = function () {
     // app.startGame(); Moved to Start Button Screen
     app.events();
     app.overlayVisible();
-    app.endOfGame();
 }
 
 $(function () {
@@ -304,34 +368,17 @@ $(function () {
 
 // Start Screen
 
-app.startButton = function (){
-    $(".startButton").on("click", function(){
+app.startButton = function () {
+    $(".startButton").on("click", function () {
         $(".startscreen").toggleClass("visible");
         app.startGame();
     });
 }
 
-// Angle + spread of each players hands
-app.handSpread = function (numberOfCards) {
-    let degrees = 0;
-    let shiftX = 120;
-    let shiftY = 0;
-    for (let i = 0; i < numberOfCards; i++) {
-        $(`.card${i}`)
-            .css({
-                "transform": `rotate(${degrees}deg)`,
-                "left": shiftX,
-                "top": shiftY
-            });
-        degrees += 8;
-        shiftX += 10;
-        shiftY += 10;
-    }
-}
 
 // Overlay Specific Pieces
 
-app.overlayVisible = function (){
+app.overlayVisible = function () {
     app.rulesOverlay();
     app.specialCardsOverlay();
     app.restartOverlay();
@@ -365,21 +412,39 @@ $(".restartNo").on("click", function () {
 
 // restart Yes
 $(".restartYes").on("click", function () {
+
+    // Resetting the hand arrays
+    app.userHand = [];
+    app.computerHand = []
+    app.garbageHand = [];
+
+    app.startOfGame = true;
+    app.yourTurn = true;
+    app.legalMove = false;
+
+
+
     app.newDeck();
+
+    $(".computerHand").empty()
+    $(".userHand").empty()
+    $(".garbageHand").empty()
+
+
+
     $(".restartGameOverlay").toggleClass("visible");
 });
 
 // End of Game Stylings
 
 app.endOfGame = function () {
-    if (userHand.length == 0) {
+    if (app.userHand.length == 0 && app.startOfGame === false) {
         console.log(`You win`);
-        
+
         $(".endScreen").toggleClass("visible");
-    } else if (computerHand.length === 0) {
+    } else if (app.computerHand.length === 0 && app.startOfGame === false) {
         $(".endScreen").toggleClass("visible");
         console.log(`you lose`);
-        
     }
 }
 
@@ -394,15 +459,6 @@ app.endButton = function () {
 //     $(".restart").on("click", function () {
 //         $(".rulesOfTheGame").addClass('visible');
 //     });
-// }
-
-// for user
-
-
-// for computer 
-// if (card.code === 8) {
-//     // append new html with all the stylings to play that card
-//     // change it so the user only has to match the suit of the randomly assigned suit 
 // }
 
 
@@ -421,8 +477,6 @@ app.rulesPickUp = function (valueOfPlayed, suitOfPlayed) {
             app.yourTurn = false;
             app.randomSuit();
         }
-
-
     }
 
     // in the event that other 2's were previously played, accumulate their value
@@ -440,35 +494,31 @@ app.rulesPickUp = function (valueOfPlayed, suitOfPlayed) {
 }
 
 app.chooseSuit = function () {
+    // Show popup with the suit choices
+    $(".suitChoice").addClass("visible");
     console.log('Pick a suit');
 
+    // Listen for user suit choice
     $(".suitPick").on('click', "img", function () {
-        const suit = $(this).attr("data-suit");
+        const suit = $(this).attr("data-suit").toUpperCase();
         console.log('You picked ' + suit);
 
         // Change value of the last card played to suit chosen
         const indexOfLast = app.garbageHand.length - 1;
 
-        app.garbageHand[indexOfLast].suit = suit.toUpperCase(); // to match uppercase
+        app.garbageHand[indexOfLast].suit = suit; // to match uppercase
         console.log(`Current suit changed to ${suit}`);
 
         app.yourTurn = false;
 
+        app.currentSuit(suit);
+
+        // Hide popup when choice selected
+        $(".suitChoice").removeClass("visible");
         $.when(app.promise).then(() => {
             app.computerTurn();
         })
     });
-
-
-
-    // for user
-
-    // if (card.code === 8) {
-    //     $(".suitchoice").toggleClass("visible");
-    //     $(".suitPick").on('click', function(){
-    //         //top card of the discard pile would change to that suit
-    //     });
-    // }
 }
 
 app.random = (number) => Math.floor(Math.random() * number);
@@ -476,11 +526,28 @@ app.random = (number) => Math.floor(Math.random() * number);
 app.randomSuit = function () {
     const indexOfLast = app.garbageHand.length - 1;
     const suits = ["DIAMONDS", "CLUBS", "HEARTS", "SPADES"];
+
     app.garbageHand[indexOfLast].suit = suits[app.random(4)]; // to match uppercase
+    app.yourTurn = true;
+
     console.log(`Current suit changed to ${app.garbageHand[indexOfLast].suit}`);
+    $.when(app.promise).then(() => app.currentSuit(app.garbageHand[indexOfLast].suit));
 }
 
+app.currentSuit = function (suit) {
+    let currentSuit = $("<img>");
+    if (suit === "DIAMONDS") {
+        currentSuit.attr("src", "assets/003-diamond.png");
+    } else if (suit === "CLUBS") {
+        currentSuit.attr("src", "assets/004-clubs.png");
+    } else if (suit === "HEARTS") {
+        currentSuit.attr("src", "assets/002-hearts.png");
+    } else if (suit === "SPADES") {
+        currentSuit.attr("src", "assets/001-spades.png");
+    }
+    $(".currentSuit").html(currentSuit);
 
+}
 
 app.rulesQueen = function (valueOfPlayed, suitOfPlayed) {
     if (valueOfPlayed === "QUEEN" && suitOfPlayed === "SPADES") {
@@ -489,13 +556,18 @@ app.rulesQueen = function (valueOfPlayed, suitOfPlayed) {
     }
 }
 
+
+// When jack is played and computer has no legal moves
 app.rulesJack = function (valueOfPlayed) {
     if (valueOfPlayed === "JACK") {
-        console.log(`Jack is played`);
+        console.log(`Jack is played, go again`);
         if (app.yourTurn === false) {
-            app.yourTurn = true;
+            app.yourTurn = true; // Will remain user's turn
         } else {
-            app.yourTurn = false
+            app.yourTurn = false // Will remain computer's turn
+            $.when(app.promise).then(() => {
+                app.computerTurn();
+            })
         }
     }
 }
