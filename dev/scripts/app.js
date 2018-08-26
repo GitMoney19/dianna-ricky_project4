@@ -278,8 +278,11 @@ app.startGame = function () {
 
 // Start app
 app.init = function () {
-    app.startGame();
+    app.startButton();
+    // app.startGame(); Moved to Start Button Screen
     app.events();
+    app.overlayVisible();
+    app.endOfGame();
 }
 
 $(function () {
@@ -287,7 +290,18 @@ $(function () {
 });
 
 
-//Styling + Animations
+//Styling + Animations + Events
+
+// Start Screen
+
+app.startButton = function (){
+    $(".startButton").on("click", function(){
+        $(".startscreen").toggleClass("visible");
+        app.startGame();
+    });
+}
+
+// Angle + spread of each players hands
 app.handSpread = function (numberOfCards) {
     let degrees = 0;
     let shiftX = 120;
@@ -304,6 +318,73 @@ app.handSpread = function (numberOfCards) {
         shiftY += 10;
     }
 }
+
+// Overlay Specific Pieces
+
+app.overlayVisible = function (){
+    app.rulesOverlay();
+    app.specialCardsOverlay();
+    app.restartOverlay();
+}
+
+app.rulesOverlay = function () {
+    $(".rules").on("click", function () {
+        $(".rulesOfTheGame").toggleClass("visible");
+    });
+}
+
+app.specialCardsOverlay = function () {
+    $(".specialCards").on("click", function () {
+        $(".specialCardsOverlay").toggleClass("visible");
+    });
+}
+
+
+// Restart Section 
+
+app.restartOverlay = function () {
+    $(".restart").on("click", function () {
+        $(".restartGameOverlay").toggleClass("visible");
+    });
+}
+
+// restart No
+$(".restartNo").on("click", function () {
+    $(".restartGameOverlay").toggleClass("visible");
+});
+
+// restart Yes
+$(".restartYes").on("click", function () {
+    app.newDeck();
+    $(".restartGameOverlay").toggleClass("visible");
+});
+
+// End of Game Stylings
+
+app.endOfGame = function () {
+    if (userHand.length == 0) {
+        console.log(`You win`);
+        
+        $(".endScreen").toggleClass("visible");
+    } else if (computerHand.length === 0) {
+        $(".endScreen").toggleClass("visible");
+        console.log(`you lose`);
+        
+    }
+}
+
+app.endButton = function () {
+    $(".endButton").on("click", function () {
+        $(".endScreen").toggleClass("visible");
+        app.startGame();
+    });
+}
+
+// app.restart = function () {
+//     $(".restart").on("click", function () {
+//         $(".rulesOfTheGame").addClass('visible');
+//     });
+// }
 
 // for user
 

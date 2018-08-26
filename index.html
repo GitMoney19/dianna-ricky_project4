@@ -11,7 +11,7 @@
 <body>
     <header>
         <div class="wrapper">
-            <h1>CRAZY EIGHTS</h1>
+            <!-- <h1>CRAZY EIGHTS</h1> -->
             <div class="sideButtonsPanel">
                 <div>
                     <button class="rules circleButtons">
@@ -26,7 +26,6 @@
                             <img src="assets/002-poker.png" alt="">
                         </figure>
                     </button>
-    
                 </div>
                 <div>
                     <button class="restart circleButtons">
@@ -55,38 +54,47 @@
                 
             </div>
         </div>
-        <div class="startscreen pageOverlay hidden">
+        <div class="startscreen pageOverlay visible">
             <div class="wrapper">
                 <div class="start popup">
                     <div>
-                        <h1>CRAZY EIGHTS</h1>
+                        <h1>CRAZY</h1>
                     </div>
                     <figure class="startImage">
                         <img src="assets/002-hearts.png" alt="">
                     </figure>
                     <div class="button startButton">
-                        <p>Click to Start</p>
+                        <h3>Start</h3>
                     </div>
-                    <div class="button startButton">
-                        <p>Special Cards</p>
-                    </div>
-                    <div class="button startButton">
-                        <p>Rules</p>
+                    <div class="startButtonSection">
+                        <div>
+                            <button class="rules circleButtons">
+                                <figure class="buttonImage">
+                                    <img src="assets/001-rules.png" alt="">
+                                </figure>
+                            </button>
+                        </div>
+                        <div>
+                            <button class="specialCards circleButtons">
+                                <figure class="buttonImage">
+                                    <img src="assets/002-poker.png" alt="">
+                                </figure>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="endScreen pageOverlay hidden">
+        <div class="endScreen pageOverlay">
             <div class="wrapper">
                 <div class="end popup">
-                    <div>
-                        <h1>You lose.</h1>
+                    <div class="endRemark">
                     </div>
-                    <figure class="startImage">
+                    <figure class="endImage">
                         <img src="assets/001-dislike.png" alt="">
                     </figure>
-                    <div class="button startButton">
-                        <p>Try Again?</p>
+                    <div class="button endButton">
+                        <h3>Play Again?</h3>
                     </div>
                     <!-- <div class="button startButton">
                         <p>Special Cards</p>
@@ -97,39 +105,66 @@
                 </div>
             </div>
         </div>
-        <div class="rulesOfTheGame pageOverlay hidden">
+        <div class="restartGameOverlay pageOverlay">
+            <div class="wrapper">
+                <div class="restartNow popup">
+                    <div class="restartRemark">
+                        <h2>Are you sure?</h2>
+                    </div>
+                    <div class="restartButtonSection">
+                        <div>
+                            <button class="restartNo restartButtons">
+                                <figure class="buttonImage">
+                                    <img src="assets/002-cross.png" alt="">
+                                </figure>
+                            </button>
+                        </div>
+                        <div>
+                            <button class="restartYes restartButtons">
+                                <figure class="buttonImage">
+                                    <img src="assets/001-checked.png" alt="">
+                                </figure>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rulesOfTheGame pageOverlay">
             <div class="wrapper">
                 <div class="rules popup">
                     <div class="rulesHeading">
+                        <div class="close"><p>X</p></div>
                         <!-- <h1>Crazy Eights</h1> -->
-                        <h2>Rules of the Game</h2>
-                        <h3>Objective: Be the first player to be rid of all the cards in your hand</h3>
+                        <h3>Rules of the Game</h3>
+                        <h4>Objective: Be the first to get rid of all your cards!</h4>
                     </div>
                     <ul class="rulesList">
                         <li class="rulesItem">
-                            <p>You can only play a card that is matching in either value or suit as the card in the centre unless you have an 8 in any suit.</p>
+                            <p>You can only play a card that matches in value or suit as the top card in the discard pile unless it's an 8.</p>
                         </li>
                         <li class="rulesItem">
-                            <p>When a player plays a "2" card, the next player must pick up two cards.</p>
+                            <p>TWOs played means the next players must pickup 2.</p>
                         </li>
                         <li class="rulesItem">
-                            <p>When a player plays a "Jack" card, the next player will miss a turn.</p>
+                            <p>JACKS will skip a turn</p>
                         </li>
                         <li class="rulesItem">
-                            <p>The "8" card of any suit is a wild card, and it can be played at anytime regardless of the value/suit in the discard pile.  The player who played the 8 will get to choose which suit the next player must play.</p>
+                            <p>EIGHTs are wild cards and can be played anytime. They also allow the player to decide the next suit.</p>
                         </li>
                         <li class="rulesItem">
-                            <p>You can play more than one card if the value of the pair/triplet of cards matches the suit or value.</p>
+                            <p>More than one card can be played if the value of the pair/triplet of cards matches the suit or value in the discard pile.</p>
                         </li>                    
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="specialCardsOverlay pageOverlay hidden">
+        <div class="specialCardsOverlay pageOverlay">
             <div class="wrapper">
                 <div class="specialCards popup">
+                    <div class="close"><p>X</p></div>
                     <div class="specialCardsHeading">
-                        <h1>Special Cards</h1>
+                        <h3>Special Cards</h3>
                     </div>
                     <div class="specialCard cardEight">
                         <figure class="icon"><img src="" alt=""></figure>
@@ -158,7 +193,7 @@
             </div>
         </div>
         </div>
-        <div class="suitChoice hidden">
+        <div class="suitChoice pageOverlay">
             <div class="wrapper">
                 <div class="popup">
                     <div class="suitPick diamond">
