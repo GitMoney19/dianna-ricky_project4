@@ -22,6 +22,19 @@ header .wrapper {
   align-items: center;
 }
 
+h1 {
+  font-family: 'Chivo', sans-serif;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+ max-width: 80px;
+}
+
 button {
   background: white;
   border: 2px solid white;
@@ -161,6 +174,10 @@ img {
 
 // Overlay - Suit Choice
 
+.suitChoice .popup {
+  display: flex;
+}
+
 .suitPick {
   display: flex;
   flex-direction: column;
@@ -168,7 +185,16 @@ img {
 }
 
 .suitImage {
-  margin: 30px;
+  margin: 20%;
+  opacity: 0.5;
+  transition: 0.3s;
+
+  cursor: pointer;
+}
+
+.suitImage:hover {
+  opacity: 1;
+  // margin: 30px;
 }
 
 // Overlay - End Screen
