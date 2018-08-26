@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="public/styles/style.css">
     <title>CRAZY EIGHTS</title>
 </head>
+
 <body>
     <header>
         <div class="wrapper">
@@ -17,7 +19,7 @@
                     <button class="rules circleButtons">
                         <figure class="buttonImage">
                             <img src="assets/001-rules.png" alt="">
-                        </figure>                    
+                        </figure>
                     </button>
                 </div>
                 <div>
@@ -40,18 +42,18 @@
     <section class="gameScreen">
         <div class="wrapper">
             <div class="screen computerHand">
-                
+
             </div>
             <div class="screen">
                 <div class="deck">
                     <div class="drawHand">
                         <img src="assets/cardFace.png" alt="">
                     </div>
-                </div> 
+                </div>
                 <div class="garbageHand"></div>
             </div>
             <div class="screen userHand">
-                
+
             </div>
         </div>
         <div class="startscreen pageOverlay visible">
@@ -168,27 +170,32 @@
                     </div>
                     <div class="specialCard cardEight">
                         <figure class="icon"><img src="" alt=""></figure>
-                        <p class="specialCardRule">Eights of any suit are wild cards and can be played at any time regardless of what the card is in the discard pile.
+                        <p class="specialCardRule">Eights of any suit are wild cards and can be played at any time regardless
+                            of what the card is in the discard pile.
                         </p>
-                        <p class="specialCardRule">The player playing the card will choose what suit the next player will have to follow.
+                        <p class="specialCardRule">The player playing the card will choose what suit the next player will
+                            have to follow.
                         </p>
                     </div>
                     <div class="specialCard cardQueenOfSpades">
                         <figure class="icon">
                             <img src="" alt="">
                         </figure>
-                        <p class="specialCardRule">When the Queen of Spades is played, the player whose turn is next will have to pick up five cards.
+                        <p class="specialCardRule">When the Queen of Spades is played, the player whose turn is next will
+                            have to pick up five cards.
                         </p>
                     </div>
                     <div class="specialCard cardTwo">
                         <figure class="icon">
                             <img src="" alt="">
                         </figure>
-                        <p class="specialCardRule">When a two of any suit is played, the player who's turn is next will have to pick up two cards.
+                        <p class="specialCardRule">When a two of any suit is played, the player who's turn is next will have
+                            to pick up two cards.
                         </p>
-                        <p class="specialCardRule">However, if the next player also has a two, the following player will have to pick up four.  Twos have cumulative effects.
+                        <p class="specialCardRule">However, if the next player also has a two, the following player will
+                            have to pick up four. Twos have cumulative effects.
                         </p>
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,27 +204,27 @@
             <div class="wrapper">
                 <div class="popup">
                     <div class="suitPick diamond">
-                        <h2>diamond</h2>
+                        <!-- <h2>diamond</h2> -->
                         <figure class="suitImage">
-                            <img src="assets/003-diamond.png" alt="image of diamonds">
+                            <img src="assets/003-diamond.png" alt="image of diamonds" data-suit="diamond">
                         </figure>
                     </div>
                     <div class="suitPick club">
-                        <h2>club</h2>
+                        <!-- <h2>club</h2> -->
                         <figure class="suitImage">
-                            <img src="assets/004-clubs.png" alt="image of clubs">
+                            <img src="assets/004-clubs.png" alt="image of clubs" data-suit="clubs">
                         </figure>
                     </div>
                     <div class="suitPick heart">
-                        <h2>heart</h2>
+                        <!-- <h2>heart</h2> -->
                         <figure class="suitImage">
-                            <img src="assets/002-hearts.png" alt="image of heart">
+                            <img src="assets/002-hearts.png" alt="image of heart" data-suit="heart">
                         </figure>
                     </div>
                     <div class="suitPick spades">
-                        <h2>spades</h2>
+                        <!-- <h2>spades</h2> -->
                         <figure class="suitImage">
-                            <img src="assets/001-spades.png" alt="image of spades">
+                            <img src="assets/001-spades.png" alt="image of spades" data-suit="spades">
                         </figure>
                     </div>
                 </div>
@@ -225,6 +232,8 @@
         </div>
     </section>
 </body>
-<script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
+<script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='
+    crossorigin='anonymous'></script>
 <script src="public/scripts/app.js"></script>
+
 </html>
