@@ -491,6 +491,8 @@ app.rulesQueen = function (valueOfPlayed, suitOfPlayed) {
     }
 }
 
+
+// When jack is played and computer has no legal moves
 app.rulesJack = function (valueOfPlayed) {
     if (valueOfPlayed === "JACK") {
         console.log(`Jack is played, go again`);
@@ -498,6 +500,9 @@ app.rulesJack = function (valueOfPlayed) {
             app.yourTurn = true; // Will remain user's turn
         } else {
             app.yourTurn = false // Will remain computer's turn
+            $.when(app.promise).then(() => {
+                app.computerTurn();
+            })
         }
     }
 }
