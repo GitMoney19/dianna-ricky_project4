@@ -181,8 +181,10 @@ app.computerTurn = function () {
     console.log('');
     console.log(`Computer Turn (${app.computerHand.length} cards in hand)`);
 
+    app.endOfGame(); // Check if end game conditions met
+
     app.legalMove = false; // Reseting legal move for computer
-    app.yourTurn = false;
+    app.yourTurn = false; // Changing to computer turn
 
     // Resets the counter for number of cards the user has drawn
     app.userDrawCount = 0
@@ -255,15 +257,15 @@ app.checkRules = function (value, suit, code) {
             console.log(`I played a ${value} of ${suit}`);
 
             app.searchHand(app.userHand, code);
-
             app.yourTurn = false;
-
         } else {
             console.log(`Computer plays a ${value} of ${suit}`);
 
             app.searchHand(app.computerHand, code);
             app.yourTurn = true;
             app.rulesPickUp(value, suit);
+
+            $.when(app.promise).then(() => app.currentSuit(suit));
         }
     }
 }
@@ -292,7 +294,6 @@ app.init = function () {
     // app.startGame(); Moved to Start Button Screen
     app.events();
     app.overlayVisible();
-    app.endOfGame();
 }
 
 $(function () {
@@ -304,8 +305,8 @@ $(function () {
 
 // Start Screen
 
-app.startButton = function (){
-    $(".startButton").on("click", function(){
+app.startButton = function () {
+    $(".startButton").on("click", function () {
         $(".startscreen").toggleClass("visible");
         app.startGame();
     });
@@ -314,7 +315,7 @@ app.startButton = function (){
 // Angle + spread of each players hands
 app.handSpread = function (numberOfCards) {
     let degrees = 0;
-    let shiftX = 120;
+    let shiftX = 0;
     let shiftY = 0;
     for (let i = 0; i < numberOfCards; i++) {
         $(`.card${i}`)
@@ -331,7 +332,7 @@ app.handSpread = function (numberOfCards) {
 
 // Overlay Specific Pieces
 
-app.overlayVisible = function (){
+app.overlayVisible = function () {
     app.rulesOverlay();
     app.specialCardsOverlay();
     app.restartOverlay();
@@ -372,14 +373,13 @@ $(".restartYes").on("click", function () {
 // End of Game Stylings
 
 app.endOfGame = function () {
-    if (userHand.length == 0) {
+    if (app.userHand.length == 0 && app.startOfGame === false) {
         console.log(`You win`);
-        
+
         $(".endScreen").toggleClass("visible");
-    } else if (computerHand.length === 0) {
+    } else if (app.computerHand.length === 0 && app.startOfGame === false) {
         $(".endScreen").toggleClass("visible");
         console.log(`you lose`);
-        
     }
 }
 
@@ -394,15 +394,6 @@ app.endButton = function () {
 //     $(".restart").on("click", function () {
 //         $(".rulesOfTheGame").addClass('visible');
 //     });
-// }
-
-// for user
-
-
-// for computer 
-// if (card.code === 8) {
-//     // append new html with all the stylings to play that card
-//     // change it so the user only has to match the suit of the randomly assigned suit 
 // }
 
 
@@ -420,9 +411,8 @@ app.rulesPickUp = function (valueOfPlayed, suitOfPlayed) {
         } else {
             app.yourTurn = false;
             app.randomSuit();
+            app.currentSuit(suitOfPlayed);
         }
-
-
     }
 
     // in the event that other 2's were previously played, accumulate their value
@@ -440,35 +430,31 @@ app.rulesPickUp = function (valueOfPlayed, suitOfPlayed) {
 }
 
 app.chooseSuit = function () {
+    // Show popup with the suit choices
+    $(".suitChoice").addClass("visible");
     console.log('Pick a suit');
 
+    // Listen for user suit choice
     $(".suitPick").on('click', "img", function () {
-        const suit = $(this).attr("data-suit");
+        const suit = $(this).attr("data-suit").toUpperCase();
         console.log('You picked ' + suit);
 
         // Change value of the last card played to suit chosen
         const indexOfLast = app.garbageHand.length - 1;
 
-        app.garbageHand[indexOfLast].suit = suit.toUpperCase(); // to match uppercase
+        app.garbageHand[indexOfLast].suit = suit; // to match uppercase
         console.log(`Current suit changed to ${suit}`);
 
         app.yourTurn = false;
 
+        app.currentSuit(suit);
+
+        // Hide popup when choice selected
+        $(".suitChoice").removeClass("visible");
         $.when(app.promise).then(() => {
             app.computerTurn();
         })
     });
-
-
-
-    // for user
-
-    // if (card.code === 8) {
-    //     $(".suitchoice").toggleClass("visible");
-    //     $(".suitPick").on('click', function(){
-    //         //top card of the discard pile would change to that suit
-    //     });
-    // }
 }
 
 app.random = (number) => Math.floor(Math.random() * number);
@@ -476,11 +462,27 @@ app.random = (number) => Math.floor(Math.random() * number);
 app.randomSuit = function () {
     const indexOfLast = app.garbageHand.length - 1;
     const suits = ["DIAMONDS", "CLUBS", "HEARTS", "SPADES"];
+
     app.garbageHand[indexOfLast].suit = suits[app.random(4)]; // to match uppercase
+    app.yourTurn = true;
+
     console.log(`Current suit changed to ${app.garbageHand[indexOfLast].suit}`);
 }
 
+app.currentSuit = function (suit) {
+    let currentSuit = $("<img>");
+    if (suit === "DIAMONDS") {
+        currentSuit.attr("src", "assets/003-diamond.png");
+    } else if (suit === "CLUBS") {
+        currentSuit.attr("src", "assets/004-clubs.png");
+    } else if (suit === "HEARTS") {
+        currentSuit.attr("src", "assets/002-hearts.png");
+    } else if (suit === "SPADES") {
+        currentSuit.attr("src", "assets/001-spades.png");
+    }
+    $(".currentSuit").html(currentSuit);
 
+}
 
 app.rulesQueen = function (valueOfPlayed, suitOfPlayed) {
     if (valueOfPlayed === "QUEEN" && suitOfPlayed === "SPADES") {
@@ -491,11 +493,11 @@ app.rulesQueen = function (valueOfPlayed, suitOfPlayed) {
 
 app.rulesJack = function (valueOfPlayed) {
     if (valueOfPlayed === "JACK") {
-        console.log(`Jack is played`);
+        console.log(`Jack is played, go again`);
         if (app.yourTurn === false) {
-            app.yourTurn = true;
+            app.yourTurn = true; // Will remain user's turn
         } else {
-            app.yourTurn = false
+            app.yourTurn = false // Will remain computer's turn
         }
     }
 }

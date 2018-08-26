@@ -37,8 +37,10 @@
                     </button>
                 </div>
             </div>
+            <div class="currentSuit" title="Current Suit"></div>
         </div>
     </header>
+
     <section class="gameScreen">
         <div class="wrapper">
             <div class="screen computerHand">
@@ -52,9 +54,7 @@
                 </div>
                 <div class="garbageHand"></div>
             </div>
-            <div class="screen userHand">
-
-            </div>
+            <div class="screen userHand"></div>
         </div>
         <div class="startscreen pageOverlay visible">
             <div class="wrapper">
@@ -136,14 +136,17 @@
             <div class="wrapper">
                 <div class="rules popup">
                     <div class="rulesHeading">
-                        <div class="close"><p>X</p></div>
+                        <div class="close">
+                            <p>X</p>
+                        </div>
                         <!-- <h1>Crazy Eights</h1> -->
                         <h3>Rules of the Game</h3>
                         <h4>Objective: Be the first to get rid of all your cards!</h4>
                     </div>
                     <ul class="rulesList">
                         <li class="rulesItem">
-                            <p>You can only play a card that matches in value or suit as the top card in the discard pile unless it's an 8.</p>
+                            <p>You can only play a card that matches in value or suit as the top card in the discard pile
+                                unless it's an 8.</p>
                         </li>
                         <li class="rulesItem">
                             <p>TWOs played means the next players must pickup 2.</p>
@@ -152,11 +155,13 @@
                             <p>JACKS will skip a turn</p>
                         </li>
                         <li class="rulesItem">
-                            <p>EIGHTs are wild cards and can be played anytime. They also allow the player to decide the next suit.</p>
+                            <p>EIGHTs are wild cards and can be played anytime. They also allow the player to decide the
+                                next suit.</p>
                         </li>
                         <li class="rulesItem">
-                            <p>More than one card can be played if the value of the pair/triplet of cards matches the suit or value in the discard pile.</p>
-                        </li>                    
+                            <p>More than one card can be played if the value of the pair/triplet of cards matches the suit
+                                or value in the discard pile.</p>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -164,7 +169,9 @@
         <div class="specialCardsOverlay pageOverlay">
             <div class="wrapper">
                 <div class="specialCards popup">
-                    <div class="close"><p>X</p></div>
+                    <div class="close">
+                        <p>X</p>
+                    </div>
                     <div class="specialCardsHeading">
                         <h3>Special Cards</h3>
                     </div>
@@ -172,7 +179,8 @@
                         <figure class="icon"><img src="" alt=""></figure>
                         <p class="specialCardRule">Eights of any suit are wild cards and can be played at anytime.
                         </p>
-                        <p class="specialCardRule">The player playing the card will choose what suit the next player will have to follow.
+                        <p class="specialCardRule">The player playing the card will choose what suit the next player will
+                            have to follow.
                         </p>
                     </div>
                     <div class="specialCard cardQueenOfSpades">
@@ -188,7 +196,8 @@
                         </figure>
                         <p class="specialCardRule">Two of any suit: Next player must pick up 2 cards.
                         </p>
-                        <p class="specialCardRule">If the next player also plays a two, the following player will have to pick up four. Twos have cumulative effects.
+                        <p class="specialCardRule">If the next player also plays a two, the following player will have to
+                            pick up four. Twos have cumulative effects.
                         </p>
                     </div>
                 </div>
@@ -198,22 +207,22 @@
         <div class="suitChoice pageOverlay">
             <div class="wrapper">
                 <div class="popup">
-                    <div class="suitPick diamond">
+                    <div class="suitPick diamonds">
                         <!-- <h2>diamond</h2> -->
                         <figure class="suitImage">
-                            <img src="assets/003-diamond.png" alt="image of diamonds" data-suit="diamond">
+                            <img src="assets/003-diamond.png" alt="image of diamonds" data-suit="diamonds">
                         </figure>
                     </div>
-                    <div class="suitPick club">
+                    <div class="suitPick clubs">
                         <!-- <h2>club</h2> -->
                         <figure class="suitImage">
                             <img src="assets/004-clubs.png" alt="image of clubs" data-suit="clubs">
                         </figure>
                     </div>
-                    <div class="suitPick heart">
+                    <div class="suitPick hearts">
                         <!-- <h2>heart</h2> -->
                         <figure class="suitImage">
-                            <img src="assets/002-hearts.png" alt="image of heart" data-suit="heart">
+                            <img src="assets/002-hearts.png" alt="image of heart" data-suit="hearts">
                         </figure>
                     </div>
                     <div class="suitPick spades">
