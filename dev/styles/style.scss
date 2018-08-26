@@ -64,6 +64,11 @@ button {
 .buttonImage {
   width: 50px;
 }
+@media (max-width: 500px) {
+  .buttonImage {
+    width: 30px;
+  }
+}
 
 .sideButtonsPanel {
   display: flex;
@@ -78,10 +83,10 @@ button {
 // Main Section
 
 .screen {
-  height: 30vh;
+  height: calc(( 100 / 3 ) * 1vh);
   width: 100%;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   position: relative; 
   padding: 30px 0;
 }
@@ -99,28 +104,44 @@ button {
 .drawHand {
   width: 100px;
   margin-right: 50px;
+  cursor: pointer; 
+}
+
+.cardFace {
+  position: relative;
+  img:first-child {
+    border-radius: 5px;
+    // border: 1px solid rgba(0, 0, 0, 0.287);
+    box-shadow: 1px 1px 5px 2px rgba(63, 63, 63, 0.431);
+  }
+  .cardIcon {
+    width: 70px;
+    position: absolute;
+    top: 35px;
+    left: 14px;
+    color: white;
+  }
 }
 
 .garbageHand {
   position: relative;
 }
 
-
 .garbageHand .cardContainer {
   width: 100px;
   position: absolute;
-  cursor: pointer; 
 }
 
 .computerHand .cardContainer {
   width: 100px;
   position: absolute;
-  cursor: pointer; 
 }
 
 .userHand .cardContainer {
   width: 100px;
   position: absolute;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 2px rgba(63, 63, 63, 0.431);
   cursor: pointer; 
 }
 
@@ -325,7 +346,7 @@ img {
   // margin: 30px;
 }
 
-.currentSuit {
+.suitContainer {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -337,6 +358,24 @@ img {
   border-radius: 50%;
   opacity: 0.4;
   background-color: #fff;
+  transition: 0.2s;
+  &:hover {
+    opacity: 0.7;
+  }
+  h4 {
+    position: absolute;
+    bottom: -20px;
+    left: -7px;
+    width: 100px;
+  }
+}
+
+@media (max-width: 500px) {
+  .suitContainer {
+    width: 55px;
+    height: 55px;
+    padding: 10px;
+  }
 }
 
 
