@@ -30,11 +30,17 @@ header .wrapper {
 
 h1 {
   font-family: 'Chivo', sans-serif;
+  // font-size: 70px;
+  // font-weight: 500;
 }
 
 .title {
   display: flex;
   align-items: center;
+  img {
+    width: 50px;
+    margin-left: 15px;
+  }
 }
 
 .logo {
@@ -179,6 +185,7 @@ img {
 .startButtonSection {
   display: flex;
   justify-content: space-between;
+  margin-top: 30px;
 }
 
 .button {
@@ -190,14 +197,66 @@ img {
   padding: 5px 0;
 }
 
+.startButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 65px;
+  width: 100%;
+  position: relative;
+  margin-bottom: 0;
+}
+
 .startButton:hover {
   cursor: pointer;
+  background-color: gold;
 }
 
 .startImage {
   width: 30%;
-  padding: 10%;;
+  padding: 10%;
+  margin-bottom: 50px;
 }
+
+// Start Button Hover
+
+.startButtonContainer {
+  // height: 80px;
+  width: 200px;
+  position: relative;
+  /* cursor: pointer; */
+
+  &:hover {
+    .cardSpread1 {
+      transform: translate(-15px, -25px) rotate(-40deg);
+    }
+    .cardSpread2 {
+      transform: translate(-5px, -35px) rotate(-15deg);
+    }
+    .cardSpread3 {
+      transform: translate(5px, -35px) rotate(5deg);
+    }
+    .cardSpread4 {
+      transform: translate(15px, -30px) rotate(30deg);
+    }
+  }
+}
+
+.fourCards {
+  width: 50px;
+  // height: 70px;
+  position: absolute;
+  right: 70px;
+  // transform: translateX(-50%);
+}
+
+.cardAnimation {
+  position: absolute;
+  transition: 0.2s;
+}
+
+
+
 
 // Overlay- Rules Page
 
