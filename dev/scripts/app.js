@@ -21,7 +21,7 @@ app.garbageHand = [];
 app.yourTurn = true;
 app.legalMove = false;
 app.userDrawCount = 0;
-
+app.drawFromGarbage = false;
 
 // Make AJAX request with user inputted data
 app.ajaxRequest = function (urlEnding) {
@@ -51,15 +51,17 @@ app.dealCards = function (numberOfCards) {
     app.promise.then((res) => {
 
         // If deck runs out of cards draw from garbage pile
-        if (res.remaining == 0) {
+        if (res.remaining == 0 || app.drawFromGarbage === true) {
+            app.drawFromGarbage = true;
+
             // <<deck_id>>/pile/<<pile_name>>/draw/?cards=AS
             urlEnding = `${app.deckID}/pile/garbage/draw/?count=${numberOfCards}`
             app.promise = (app.ajaxRequest(urlEnding));
 
-            $.when(app.promse)
+            $.when(app.promise)
                 .then((garbageRes) => {
+                    app.cardsForPile = garbageRes.cards; // Creatin new mutable property
                     app.decideDeal(numberOfCards)
-                    app.cardsForPile = garbageRes.cards; // Creatin new mutable propertyg
                 });
         } else {
             app.cardsForPile = res.cards; // Creating new mutable property
@@ -123,7 +125,8 @@ app.decidePile = function (pileName, hand) {
         app.displayHands(app.userHand, `.${pileName}Hand`);
     } else if (pileName === "computer") {
         hand.forEach(card => app.computerHand.push(card));
-        app.displayHands(app.computerHand, `.${pileName}Hand`);
+        app.displayComputer(app.computerHand, `.${pileName}Hand`)
+        // app.displayHands(app.computerHand, `.${pileName}Hand`);
         app.yourTurn = true; // Changing back to user turn after computer has played
     } else if (pileName === "garbage") {
         hand.forEach(card => app.garbageHand.push(card));
@@ -144,8 +147,37 @@ app.removeFromPile = function (code) {
     const cards = $(`.cardContainer[data-code="${code}"]`).remove();
 }
 
+app.sortHand = function () {
+    // app.userHand.sort((a, b) => parseInt(a.value) - parseInt(b.value));
+    let suitValueA;
+    let suitValueB
+    app.userHand.sort((a, b) => {
+        if (a.suit === "DIAMONDS") {
+            suitValueA = 1 + parseInt(a.value);
+        } else if (a.suit === "CLUBS") {
+            suitValueA = 2;
+        } else if (a.suit === "HEARTS") {
+            suitValueA = 3;
+        } else {
+            suitValueA = 4;
+        }
+
+        if (b.suit === "DIAMONDS") {
+            suitValueB = 1;
+        } else if (b.suit === "CLUBS") {
+            suitValueB = 2;
+        } else if (b.suit === "HEARTS") {
+            suitValueB = 3;
+        } else {
+            suitValueB = 4;
+        }
+        return suitValueA - suitValueB;
+    });
+}
+
 // Display data on the page
 app.displayHands = function (dealtCards, hand) {
+    app.sortHand();
     $(hand).empty()
 
     dealtCards.forEach((card, i) => {
@@ -181,6 +213,29 @@ app.handSpread = function (numberOfCards) {
         shiftX += 10;
         shiftY += 10;
     }
+}
+
+app.displayComputer = function (dealtCards, hand) {
+    $(hand).empty()
+
+    dealtCards.forEach((card, i) => {
+        const cardImageDiv = $("<div>")
+            .addClass(`cardContainer cardFace card${i}`)
+            .attr({
+                "data-value": card.value,
+                "data-suit": card.suit,
+                "data-code": card.code
+            });
+        const cardImage = $("<img>").attr("src", "../../assets/cardFace.png");
+        const cardIcon = $("<img>")
+            .attr("src", "../../assets/womens-day.svg")
+            .addClass("cardIcon");
+
+        cardImageDiv.append(cardImage, cardIcon);
+        $(hand).append(cardImageDiv);
+    });
+    // Styling for hands
+    app.handSpread(dealtCards.length);
 }
 
 app.displayGarbage = function (dealtCards, hand) {
@@ -262,6 +317,8 @@ app.computerTurn = function () {
     }
     console.log('');
     console.log(`My Turn (${app.userHand.length} cards in hand)`);
+
+    app.endOfGame();
 }
 
 // Go through all cards in computer hand to check for available rules
