@@ -13,7 +13,6 @@
 <body>
     <header>
         <div class="wrapper">
-            <!-- <h1>CRAZY EIGHTS</h1> -->
             <div class="sideButtonsPanel">
                 <div>
                     <button class="rules circleButtons">
@@ -46,10 +45,8 @@
     </header>
     <section class="gameScreen">
         <div class="wrapper">
-            <div class="screen computerHand">
-
-            </div>
-            <div class="screen garbagePile">
+            <div class="screen computerHand"></div>
+            <div class="screen screenSmall garbagePile">
                 <div class="deck">
                     <div class="drawHand">
 
@@ -70,8 +67,8 @@
                         <h1>CRAZY</h1>
                     </div>
                     <div class="crazyEights">
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper flipHeart">
+                        <div class="flip-container">
+                            <div class="flipper">
                                 <div class="front">
                                     <img src="assets/003-diamond.png" alt="">
                                 </div>
@@ -81,19 +78,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper flipHeart">
+                        <div class="flip-container">
+                            <div class="flipper">
                                 <div class="front">
                                     <img src="assets/004-clubs.png" alt="">
                                     <h2>8</h2>
                                 </div>
-                                <div class="backfront">
+                                <div class="back">
                                     <img src="assets/004-clubs.png" alt="">
                                 </div>
                             </div>
                         </div>
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper flipHeart">
+                        <div class="flip-container">
+                            <div class="flipper">
                                 <div class="front">
                                     <img src="assets/002-hearts.png" alt="">
                                 </div>
@@ -103,8 +100,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-                            <div class="flipper flipHeart">
+                        <div class="flip-container">
+                            <div class="flipper">
                                 <div class="front">
                                     <img src="assets/001-spades.png" alt="">
                                     <h2>8</h2>
@@ -277,7 +274,7 @@
                     <div class="specialCard cardEight">
                         <figure class="icon"><img src="assets/eights.png" alt=""></figure>
                         <div class="specialCardRules">
-                            <p>Eights of any suit are wild cards and can be played at anytime.The player playing the card will choose what suit the next player will have to follow.</p>
+                            <p>Eights of any suit: Can be played at anytime (Wild Cards). The player playing the card will choose what suit the next player will have to follow.</p>
                         </div>
                     </div>
                     <div class="specialCard cardQueenOfSpades">
@@ -307,7 +304,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         <div class="suitChoice pageOverlay">
             <div>
