@@ -236,9 +236,9 @@ app.displayComputer = function (dealtCards, hand) {
                 "data-suit": card.suit,
                 "data-code": card.code
             });
-        const cardImage = $("<img>").attr("src", "../../assets/cardFace.png");
+        const cardImage = $("<img>").attr("src", "assets/cardFace.png");
         const cardIcon = $("<img>")
-            .attr("src", "../../assets/womens-day.svg")
+            .attr("src", "assets/womens-day.svg")
             .addClass("cardIcon");
 
         cardImageDiv.append(cardImage, cardIcon);
