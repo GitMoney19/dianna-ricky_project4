@@ -2,37 +2,26 @@
 @import "partials/utils";
 @import "partials/typography";
 
-body {
-    background: radial-gradient(ellipse at center, #408E2F 0%,#003D1A 85%);
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-
-.wrapper {
-  max-width: 230px;
-  width: 80%;
-  margin: 0 auto; 
-}
-
-//Start of Game
-
-
-
 
 // Header Section
 
 header .wrapper {
   display: flex;
   align-items: center;
+  margin-top: 30px;
 }
 
 h1 {
   font-family: 'Chivo', sans-serif;
   color: rgb(56, 56, 56);;
-  // font-size: 70px;
+  font-size: 95px;
   // font-weight: 500;
+}
+
+@media (max-width: 438px) {
+  h1 {
+    font-size: 75px;
+  }
 }
 
 .title {
@@ -50,12 +39,15 @@ h1 {
 
 button {
   background: white;
-  border: 2px solid white;
+  border: none;
   border-radius: 50%;
-  padding: 10px;
+  padding: 15px;
   margin-bottom: 10px;
 }
 
+.circleButtons {
+  transition: 0.2s;
+}
 
 .circleButtons:hover {
   background: gold;
@@ -83,12 +75,16 @@ button {
 // Main Section
 
 .screen {
-  height: calc(( 100 / 3 ) * 1vh);
+  height: 30vh;
   width: 100%;
   display: flex;
-  // justify-content: center;
   position: relative; 
   padding: 30px 0;
+}
+
+.screenSmall {
+  height: 33vh;
+  padding-top: 50px;
 }
 
 .userHand {
@@ -98,7 +94,6 @@ button {
 
 .deck {
   display: flex;
-  justify-content: space-between;
 }
 
 .drawHand {
@@ -170,14 +165,9 @@ button {
   cursor: pointer; 
 }
 
-img {
-  max-width: 100%; 
-}
-
 .userHand img {
   transition: 0.2s;
   &:hover {
-    border: 3px solid gold; 
     transform: translateY(-20px)
   }
 }
@@ -227,6 +217,7 @@ img {
 .popup {
   background: white;
   max-width: 550px;
+  width: 90%;
   height: 80vh;
   margin: 80px auto;
   padding: 5% 50px;
@@ -247,7 +238,6 @@ img {
 }
 
 .close {
-  // width: 15px;
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -279,6 +269,7 @@ img {
   bottom: 0;
   right: 0;
 }
+
 // Overlay - Start Screen
 
 .start {
@@ -290,6 +281,7 @@ img {
 
 .startButtonSection {
   display: flex;
+  width: 150px;
   justify-content: space-between;
   margin-top: 30px;
 }
@@ -303,7 +295,7 @@ img {
   padding: 5px 0;
 }
 
-.startButton {
+.startButton, .endButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -312,27 +304,102 @@ img {
   position: relative;
   margin-bottom: 0;
   color: white;
+  transition: 200ms;
 }
 
-.startButton:hover {
+.startButton:hover, .endButton:hover {
   cursor: pointer;
   background-color: gold;
   color: rgb(90, 90, 90);
 }
 
-.startImage {
-  width: 30%;
-  padding: 10%;
-  margin-bottom: 50px;
+.crazyEights {
+  display: flex;
+}
+
+.flip-container {
+  position: relative;
+  display: block;
+  z-index: 90;
+  // width: 100px;
+  margin: 20px 12px 50px 0;
+}
+
+@media (max-width: 500px) {
+  .buttonImage {
+    width: 30px;
+  }
+}
+
+.flipper {
+  display: flex;
+  width: 100px;
+  width: 70px;
+  // height: 80px;
+  transform-style: preserve-3d;
+  transition: all 300ms linear;
+}
+
+.flip-container:hover .flipper {
+  transform: rotateY(180deg);
+}
+
+.front {
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.front.back {
+  display: block;
+  transform: rotateY(180deg);
+}
+
+.front h2, .back h2 {
+  color: white;
+  position: absolute;
+  font-weight: 400;
+  top: 3px;
+  right: 27px;
+  font-size: 25px;
+  transition: none;
+}
+
+@media (max-width: 438px) {
+  .flip-container {
+    margin-bottom: 30px;
+    width: 65px;
+  }
+  .front, .back {
+    width: 65px;
+    height: 85px;
+    padding: 8px;
+  }
+  .flipper {
+    width: 65px;
+  }
+  .front h2, .back h2 {
+    right: 27px;
+    top: 8px;
+    font-size: 1.7rem;
+  }
+}
+
+.iconCredit {
+  color: lightgray;
+  text-align: center;
+}
+
+.iconCredit a {
+  color: lightgray;
+  text-decoration: none;
 }
 
 // Start Button Hover
 
 .startButtonContainer {
-  // height: 80px;
   width: 200px;
+  margin-top: 20px;
   position: relative;
-  /* cursor: pointer; */
 
   &:hover {
     .cardSpread1 {
@@ -363,8 +430,32 @@ img {
   transition: 0.2s;
 }
 
+// Overlay - Special Cards Page
 
+.specialCard {
+  display: flex;
+  align-items: center;
+}
 
+.specialCardRules {
+  width: 77%;
+}
+
+.icon {
+  width: 200px;
+  width: 22%;
+}
+
+@media (max-width: 438px) {
+  .specialCardRules {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .icon {
+    display: none;
+  }
+}
 
 // Overlay- Rules Page
 
@@ -397,7 +488,6 @@ img {
 
 .suitImage:hover {
   opacity: 1;
-  // margin: 30px;
 }
 
 .suitContainer {
@@ -433,7 +523,6 @@ img {
   }
 }
 
-
 // Overlay - Restart
 
 .restartRemark {
@@ -443,8 +532,8 @@ img {
 .restartButtonSection {
   display: flex;
   justify-content: space-around;
-  height: 20%;
-  margin: 15px 50px;
+  height: 30%;
+  margin: 15px 100px;
 }
 
 .restartNo {
@@ -452,12 +541,14 @@ img {
 }
 .restartButton {
   border: 5px white solid;
-  padding: 15px;
+  padding: 20px;
   margin-bottom: 15px;
+  transition: 300ms;
 }
 
 .restartButtons:hover {
-  border: 5px green solid;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.25);
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 
@@ -468,6 +559,17 @@ img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 101;
+}
+
+.endRemark {
+  text-align: center;
+}
+
+.endImage {
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 .newGameButton:hover {

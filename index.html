@@ -14,7 +14,6 @@
 <body>
     <header>
         <div class="wrapper">
-            <!-- <h1>CRAZY EIGHTS</h1> -->
             <div class="sideButtonsPanel">
                 <div>
                     <button class="rules circleButtons">
@@ -45,13 +44,10 @@
             </div>
         </div>
     </header>
-
     <section class="gameScreen">
         <div class="wrapper">
-            <div class="screen computerHand">
-
-            </div>
-            <div class="screen">
+            <div class="screen computerHand"></div>
+            <div class="screen screenSmall garbagePile">
                 <div class="deck">
                     <div class="drawHand">
 
@@ -70,12 +66,55 @@
                 <div class="start popup">
                     <div class="title">
                         <h1>CRAZY</h1>
-                        <!-- <img src="assets/crazy8s.png" alt=""> -->
                     </div>
-                    <figure class="startImage">
-                        <img src="assets/002-hearts.png" alt="">
-                    </figure>
-                    <div class=" startButtonContainer">
+                    <div class="crazyEights">
+                        <div class="flip-container">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img src="assets/003-diamond.png" alt="">
+                                </div>
+                                <div class="back">
+                                    <img src="assets/003-diamond.png" alt="">
+                                    <h2>8</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-container">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img src="assets/004-clubs.png" alt="">
+                                    <h2>8</h2>
+                                </div>
+                                <div class="back">
+                                    <img src="assets/004-clubs.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-container">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img src="assets/002-hearts.png" alt="">
+                                </div>
+                                <div class="back">
+                                    <img src="assets/002-hearts.png" alt="">
+                                    <h2>8</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-container">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img src="assets/001-spades.png" alt="">
+                                    <h2>8</h2>
+                                </div>
+                                <div class="back">
+                                    <img src="assets/001-spades.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="startButtonContainer">
                         <div class="fourCards">
                             <img src="assets/diamonds.svg" alt="" class="cardAnimation cardSpread1">
                             <img src="assets/hearts.svg" alt="" class="cardAnimation cardSpread2">
@@ -83,8 +122,6 @@
                             <img src="assets/clubs.svg" alt="" class="cardAnimation cardSpread4">
                         </div>
                         <h3 class="button startButton">Start</h3>
-
-
                     </div>
                     <div class="startButtonSection">
                         <div>
@@ -102,6 +139,26 @@
                             </button>
                         </div>
                     </div>
+                    <div class="iconCredit">
+                        <div>Icons made by
+                            <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from
+                            <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
+                            <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0"
+                                target="_blank">CC 3.0 BY</a>
+                        </div>
+                        <div>Icons made by
+                            <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from
+                            <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
+                            <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0"
+                                target="_blank">CC 3.0 BY</a>
+                        </div>
+                        <div>Icons made by
+                            <a href="http://www.freepik.com" title="Freepik">Freepik</a> from
+                            <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
+                            <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0"
+                                target="_blank">CC 3.0 BY</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -117,10 +174,15 @@
                     <div class="endRemark">
                     </div>
                     <figure class="endImage">
-                        <img src="assets/001-dislike.png" alt="">
                     </figure>
-                    <div class="button endButton">
-                        <h3>Play Again?</h3>
+                    <div class="startButtonContainer">
+                        <div class="fourCards">
+                            <img src="assets/diamonds.svg" alt="" class="cardAnimation cardSpread1">
+                            <img src="assets/hearts.svg" alt="" class="cardAnimation cardSpread2">
+                            <img src="assets/spades.svg" alt="" class="cardAnimation cardSpread3">
+                            <img src="assets/clubs.svg" alt="" class="cardAnimation cardSpread4">
+                        </div>
+                        <h3 class="button endButton">Play Again?</h3>
                     </div>
                     <!-- <div class="button startButton">
                         <p>Special Cards</p>
@@ -181,8 +243,7 @@
                     </div>
                     <ul class="rulesList">
                         <li class="rulesItem">
-                            <p>Card played must match the top card in the discard pile in value or suit. You may put down
-                                pairs, triplets, quartets following this rule.</p>
+                            <p>Card played must match the top card in the discard pile in value or suit. </p>
                         </li>
                         <li class="rulesItem">
                             <p>TWOs played means the next player must pickup 2 cards.</p>
@@ -191,8 +252,7 @@
                             <p>JACKS will skip the next player's turn.</p>
                         </li>
                         <li class="rulesItem">
-                            <p>EIGHTs are wild cards and can be played at anytime. The player who played the card must choose
-                                the suit the next player must follow.</p>
+                            <p>EIGHTs are wild cards and can be played at anytime. The player who played the card must choose the suit the next player must follow.</p>
                         </li>
                     </ul>
                 </div>
@@ -213,33 +273,38 @@
                         <h3>Special Cards</h3>
                     </div>
                     <div class="specialCard cardEight">
-                        <figure class="icon"><img src="" alt=""></figure>
-                        <p class="specialCardRule">Eights of any suit are wild cards and can be played at anytime.
-                        </p>
-                        <p class="specialCardRule">The player playing the card will choose what suit the next player will
-                            have to follow.
-                        </p>
+                        <figure class="icon"><img src="assets/eights.png" alt=""></figure>
+                        <div class="specialCardRules">
+                            <p>Eights of any suit: Can be played at anytime (Wild Cards). The player playing the card will choose what suit the next player will have to follow.</p>
+                        </div>
                     </div>
                     <div class="specialCard cardQueenOfSpades">
                         <figure class="icon">
-                            <img src="" alt="">
+                            <img src="assets/queenOfSpades.png" alt="">
                         </figure>
-                        <p class="specialCardRule">Queen of Spades: Next player must pick up 5 cards.
-                        </p>
+                        <div class="specialCardRules">
+                            <p>Queen of Spades: Next player must pick up 5 cards.</p>
+                        </div>
+                        
                     </div>
                     <div class="specialCard cardTwo">
                         <figure class="icon">
-                            <img src="" alt="">
+                            <img src="assets/twos.png" alt="">
                         </figure>
-                        <p class="specialCardRule">Two of any suit: Next player must pick up 2 cards.
-                        </p>
-                        <p class="specialCardRule">If the next player also plays a two, the following player will have to
-                            pick up four. Twos have cumulative effects.
-                        </p>
+                        <div class="specialCardRules">
+                            <p>Twos of any suit: Next player must pick up 2 cards. If the next player also plays a two, the following player will have to pick up four. Twos have cumulative effects.</p>
+                        </div>
+                    </div>
+                    <div class="specialCard cardJack">
+                        <figure class="icon">
+                            <img src="assets/jacks.png" alt="">
+                        </figure>
+                        <div class="specialCardRules">
+                            <p>Jacks of any suit: Skip the next players turn.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         <div class="suitChoice pageOverlay">
             <div>
