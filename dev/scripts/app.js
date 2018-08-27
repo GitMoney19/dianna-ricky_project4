@@ -53,10 +53,13 @@ app.dealCards = function (numberOfCards) {
         // If deck runs out of cards draw from garbage pile
         if (res.remaining == 0 || app.drawFromGarbage === true) {
             app.drawFromGarbage = true;
+            app.shufflePile();
 
             // <<deck_id>>/pile/<<pile_name>>/draw/?cards=AS
             urlEnding = `${app.deckID}/pile/garbage/draw/?count=${numberOfCards}`
-            app.promise = (app.ajaxRequest(urlEnding));
+            $.when(app.promise).then(() => {
+                app.promise = (app.ajaxRequest(urlEnding));
+            });
 
             $.when(app.promise)
                 .then((garbageRes) => {
@@ -69,6 +72,13 @@ app.dealCards = function (numberOfCards) {
         }
 
     });
+}
+
+app.shufflePile = function () {
+    //<<deck_id>>/pile/<<pile_name>>/shuffle
+    urlEnding = `${app.deckID}/pile/garbage/shuffle`
+    app.promise = (app.ajaxRequest(urlEnding));
+
 }
 
 app.decideDeal = function (numberOfCards) {
@@ -512,18 +522,20 @@ app.endButton = function () {
     });
 }
 
-// app.restart = function () {
-//     $(".restart").on("click", function () {
-//         $(".rulesOfTheGame").addClass('visible');
-//     });
-// }
-
-
 app.rulesPickUp = function (valueOfPlayed, suitOfPlayed) {
 
     if (valueOfPlayed == 2) {
+
         app.dealCards(2);
         console.log('Pick up 2 cards');
+
+        $(".pickUp").remove();
+        const eventAlert = $("<div>")
+            .addClass("pickUp")
+            .text("+2");
+
+        $(".gameScreen").append(eventAlert);
+        $(".pickUp").fadeOut(2000);
     }
 
     if (valueOfPlayed == 8) {
@@ -550,6 +562,28 @@ app.rulesPickUp = function (valueOfPlayed, suitOfPlayed) {
     app.rulesJack(valueOfPlayed);
 }
 
+app.displaySuit = function (suit) {
+
+    $(".suitChange").remove();
+    const eventAlert = $("<img>")
+        .addClass("suitChange")
+
+    if (suit === "DIAMONDS") {
+        eventAlert.attr("src", "assets/003-diamond.png");
+    } else if (suit === "CLUBS") {
+        eventAlert.attr("src", "assets/004-clubs.png");
+    } else if (suit === "HEARTS") {
+        eventAlert.attr("src", "assets/002-hearts.png");
+    } else if (suit === "SPADES") {
+        eventAlert.attr("src", "assets/001-spades.png");
+    }
+
+
+
+    $(".gameScreen").append(eventAlert);
+    $(".suitChange").fadeOut(2000);
+}
+
 app.chooseSuit = function () {
     // Show popup with the suit choices
     $(".suitChoice").addClass("visible");
@@ -569,6 +603,7 @@ app.chooseSuit = function () {
         app.yourTurn = false;
 
         app.currentSuit(suit);
+        app.displaySuit(suit);
 
         // Hide popup when choice selected
         $(".suitChoice").removeClass("visible");
@@ -589,6 +624,7 @@ app.randomSuit = function () {
 
     console.log(`Current suit changed to ${app.garbageHand[indexOfLast].suit}`);
     $.when(app.promise).then(() => app.currentSuit(app.garbageHand[indexOfLast].suit));
+    app.displaySuit(app.garbageHand[indexOfLast].suit);
 }
 
 app.currentSuit = function (suit) {
@@ -610,6 +646,14 @@ app.rulesQueen = function (valueOfPlayed, suitOfPlayed) {
     if (valueOfPlayed === "QUEEN" && suitOfPlayed === "SPADES") {
         app.dealCards(5);
         console.log(`Queen of spades pick up 5 cards`);
+
+        $(".pickUp").remove();
+        const eventAlert = $("<div>")
+            .addClass("pickUp")
+            .text("+5");
+
+        $(".gameScreen").append(eventAlert);
+        $(".pickUp").fadeOut(2000);
     }
 }
 
@@ -620,6 +664,13 @@ app.rulesJack = function (valueOfPlayed) {
         console.log(`Jack is played, go again`);
         if (app.yourTurn === false) {
             app.yourTurn = true; // Will remain user's turn
+            $(".skip").remove();
+            const eventAlert = $("<div>")
+                .addClass("skip")
+                .text("Skip");
+
+            $(".gameScreen").append(eventAlert);
+            $(".skip").fadeOut(2000);
         } else {
             app.yourTurn = false // Will remain computer's turn
             $.when(app.promise).then(() => {
