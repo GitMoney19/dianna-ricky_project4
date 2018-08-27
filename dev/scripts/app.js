@@ -150,7 +150,7 @@ app.removeFromPile = function (code) {
 app.sortHand = function () {
     // app.userHand.sort((a, b) => parseInt(a.value) - parseInt(b.value));
     let suitValueA;
-    let suitValueB
+    let suitValueB;
     app.userHand.sort((a, b) => {
         if (a.suit === "DIAMONDS") {
             suitValueA = 1 + parseInt(a.value);
@@ -286,6 +286,7 @@ app.userTurn = function () {
 
             $.when(app.promise).then(() => app.currentSuit(cardSuit));
             app.rulesPickUp(cardValue, cardSuit);
+            app.endOfGame();
 
             if (app.yourTurn === false) {
                 $.when(app.promise).then(() => {
@@ -317,8 +318,8 @@ app.computerTurn = function () {
     }
     console.log('');
     console.log(`My Turn (${app.userHand.length} cards in hand)`);
-
     app.endOfGame();
+    app.endOfGameButton();
 }
 
 // Go through all cards in computer hand to check for available rules
@@ -404,8 +405,6 @@ app.searchHand = function (hand, code) {
 
 app.startGame = function () {
     app.newDeck();
-
-
 }
 
 // Start app
@@ -432,7 +431,6 @@ app.startButton = function () {
     });
 }
 
-
 // Overlay Specific Pieces
 
 app.overlayVisible = function () {
@@ -452,7 +450,6 @@ app.specialCardsOverlay = function () {
         $(".specialCardsOverlay").toggleClass("visible");
     });
 }
-
 
 // Restart Section 
 
@@ -479,15 +476,11 @@ $(".restartYes").on("click", function () {
     app.yourTurn = true;
     app.legalMove = false;
 
-
-
     app.newDeck();
 
     $(".computerHand").empty()
     $(".userHand").empty()
     $(".garbageHand").empty()
-
-
 
     $(".restartGameOverlay").toggleClass("visible");
 });
@@ -495,28 +488,44 @@ $(".restartYes").on("click", function () {
 // End of Game Stylings
 
 app.endOfGame = function () {
+    const winMessage = "You WIN!";
+    const loseMessage = "You LOSE!";
+    $(".endRemark").html(``);
+    $(".endImage").html(``);
+
+
     if (app.userHand.length == 0 && app.startOfGame === false) {
         console.log(`You win`);
-
         $(".endScreen").toggleClass("visible");
+        $(".endRemark").append(`<h2>${winMessage}</h2>`);
+        $(".endImage").append(`<img src="assets/002-podium.png"></img>`);
     } else if (app.computerHand.length === 0 && app.startOfGame === false) {
         $(".endScreen").toggleClass("visible");
         console.log(`you lose`);
+        $(".endRemark").append(`<h2>${loseMessage}</h2>`);
+        $(".endImage").append(`<img src="assets/001-dislike.png"></img>`);
     }
 }
 
-app.endButton = function () {
+app.endOfGameButton = function () {
     $(".endButton").on("click", function () {
+        app.userHand = [];
+        app.computerHand = []
+        app.garbageHand = [];
+
+        app.startOfGame = true;
+        app.yourTurn = true;
+        app.legalMove = false;
+
+        app.newDeck();
+
+        $(".computerHand").empty()
+        $(".userHand").empty()
+        $(".garbageHand").empty()
+
         $(".endScreen").toggleClass("visible");
-        app.startGame();
     });
 }
-
-// app.restart = function () {
-//     $(".restart").on("click", function () {
-//         $(".rulesOfTheGame").addClass('visible');
-//     });
-// }
 
 
 app.rulesPickUp = function (valueOfPlayed, suitOfPlayed) {
@@ -535,16 +544,6 @@ app.rulesPickUp = function (valueOfPlayed, suitOfPlayed) {
             app.randomSuit();
         }
     }
-
-    // in the event that other 2's were previously played, accumulate their value
-    // if (app.garbageHand[currentGarbageIndex - 3].value === 3) {
-    //     app.dealCards(8);
-    // } else if (app.garbageHand[currentGarbageIndex - 2].value === 2 &&
-    //     app.garbageHand.length >= 2) {
-    //     app.dealCards(6);
-    // } else if (app.garbageHand[currentGarbageIndex - 1].value === 1) {
-    //     app.dealCards(4);
-    // }
 
     app.rulesQueen(valueOfPlayed, suitOfPlayed);
     app.rulesJack(valueOfPlayed);
@@ -612,7 +611,6 @@ app.rulesQueen = function (valueOfPlayed, suitOfPlayed) {
         console.log(`Queen of spades pick up 5 cards`);
     }
 }
-
 
 // When jack is played and computer has no legal moves
 app.rulesJack = function (valueOfPlayed) {
