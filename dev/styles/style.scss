@@ -114,12 +114,37 @@ button {
     // border: 1px solid rgba(0, 0, 0, 0.287);
     box-shadow: 1px 1px 5px 2px rgba(63, 63, 63, 0.431);
   }
+  &:hover .cardIcon {
+    animation: shake 0.4s ease-in-out;
+    animation-iteration-count: 1;
+  }
   .cardIcon {
     width: 70px;
     position: absolute;
     top: 35px;
     left: 14px;
     color: white;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+    
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+
+  75% {
+    transform: rotate(-10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
   }
 }
 
@@ -172,16 +197,17 @@ img {
 }
 
 .popup {
-    background: white;
-    max-width: 550px;
-    height: 80vh;
-    margin: 80px auto;
-    padding: 5% 50px;
-    border-radius: 15px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  background: white;
+  max-width: 550px;
+  height: 80vh;
+  margin: 80px auto;
+  padding: 5% 50px;
+  border-radius: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 1px 1px 20px 0px black;
 }
 
 .rulesHeading, .specialCardsHeading {
