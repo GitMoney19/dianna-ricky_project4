@@ -72,6 +72,18 @@ button {
   right: 0;
 }
 
+@media (max-width: 438px) {
+  .sideButtonsPanel {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  }
+}
+
 // Main Section
 
 .screen {
@@ -325,9 +337,9 @@ button {
   margin: 20px 12px 50px 0;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 438px) {
   .buttonImage {
-    width: 30px;
+    width: 20px;
   }
 }
 
@@ -510,16 +522,21 @@ button {
     color: white;
     position: absolute;
     bottom: -20px;
-    left: -7px;
-    width: 100px;
+    left: 22px;
+    width: 30px;
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 438px) {
   .suitContainer {
-    width: 55px;
-    height: 55px;
+    left: auto;
+    right: 20px;
+    width: 40px;
+    height: 40px;
     padding: 10px;
+    h4 {
+      left: 5px;
+    }
   }
 }
 
